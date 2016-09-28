@@ -7,7 +7,7 @@ import './_register';
 import { postRequest } from '../../utils/web';
 import params from '../../utils/params';
 
-class Login extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -143,5 +143,5 @@ class Login extends Component {
 Register.contextTypes = {
   router: React.PropTypes.object,
 };
-const _Login = createForm()(Login);
-export default _Login;
+const _Register = createForm()(Register);
+export default _Register;
