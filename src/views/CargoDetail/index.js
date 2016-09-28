@@ -248,19 +248,19 @@ class CargoDetail extends React.Component {
 
   // 获取货源信息
   prepareData() {
-    const _data = {
-        cargoId: this.props.params.id,
-        type: 'CARGO_SIMPLE',
-      };
+    const data = {
+      cargoId: this.props.params.id,
+      type: 'CARGO_SIMPLE',
+    };
     const service = 'SERVICE_CARGO';
-   this.httpRequest(data,service,(returnData)=>{
+    this.httpRequest(data, service, (returnData) => {
       this.setState({
         cargoInfo: returnData.result,
         projectInfo: returnData.result.projectInfo,
       });
-   },(returnData)=>{
-
-   });
+    }, (returnData) => {
+      console.log(returnData);
+    });
   }
 }
 

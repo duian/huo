@@ -17,22 +17,21 @@ import MyCargoDetail from './views/MyCargoDetail';
 import MyCargoSuccess from './views/MyCargoDetail/OfferSuccess';
 import MyCargoMap from './views/MyCargoDetail/Map';
 
-function redirectToDashboad(nextState, replace) {
-  if (localStorage.getItem('uuid') != null) {
-    replace('/');
-  }
-}
+// function redirectToDashboad(nextState, replace) {
+//   if (localStorage.getItem('uuid') !== null) {
+//     replace('/');
+//   }
+// }
 
 function redirectToLogin(nextState, replace) {
-  if (localStorage.getItem('uuid') == null) {
+  if (localStorage.getItem('uuid') === null) {
     replace('/login');
   }
 }
 
 function redirectToCargo(nextState, replace) {
-  if (localStorage.getItem('uuid') != null) {
-
-     replace('/cargo');
+  if (localStorage.getItem('uuid') !== null) {
+    replace('/cargo');
   }
 }
 

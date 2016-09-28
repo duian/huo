@@ -78,22 +78,20 @@ class CargoDetail extends React.Component {
 
   // 获取货源信息
   prepareData() {
-    const uuid = localStorage.getItem('uuid');
+    // const uuid = localStorage.getItem('uuid');
     const data = {
-        orderId: this.props.params.id.toString(),
-        type: 'ORDER_DETAIL',
-      };
-    const  service = 'SERVICE_ORDER';
-    this.httpRequest(data,service,(returnData)=>{
-        this.setState({
-          cargoInfo: returnData.result,
-          projectInfo: returnData.result.projectInfo,
-          loadAddressInfo: returnData.result.loadAddressInfo,
-          unloadAddressInfo: returnData.result.unloadAddressInfo,
-        });
-    },(returnData)=>{
-
-    });
+      orderId: this.props.params.id.toString(),
+      type: 'ORDER_DETAIL',
+    };
+    const service = 'SERVICE_ORDER';
+    this.httpRequest(data, service, (returnData) => {
+      this.setState({
+        cargoInfo: returnData.result,
+        projectInfo: returnData.result.projectInfo,
+        loadAddressInfo: returnData.result.loadAddressInfo,
+        unloadAddressInfo: returnData.result.unloadAddressInfo,
+      });
+    }, () => (null));
   }
 
   // 获取支付信息
@@ -101,15 +99,15 @@ class CargoDetail extends React.Component {
     // const uuid = localStorage.getItem('uuid');
     const { id } = this.props.params;
     const data = {
-        orderId: id,
-        type: 'ORDER_PAYINFO',
-      };
-   const   service = 'SERVICE_PAY';
-   this.httpRequest(data,service,(returnData)=>{
-        console.log('success');
-   },(returnData)=>{
-
-   });
+      orderId: id,
+      type: 'ORDER_PAYINFO',
+    };
+    const service = 'SERVICE_PAY';
+    this.httpRequest(data, service, (returnData) => {
+      console.log('success', returnData);
+    }, (returnData) => {
+      console.log('return', returnData);
+    });
   }
 
   // 确认支付
