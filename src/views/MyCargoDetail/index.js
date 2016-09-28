@@ -106,9 +106,10 @@ class CargoDetail extends React.Component {
       };
    const   service = 'SERVICE_PAY';
    this.httpRequest(data,service,(returnData)=>{
-        console.log('success');
+      this.setState({ payInfo: returnData.result });
+      this.handleOfferOpen();
    },(returnData)=>{
-
+     
    });
   }
 
