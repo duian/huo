@@ -11,7 +11,7 @@ class Person extends Component {
 
   constructor(props) {
     super(props);
-
+    
     this.state = {
       files: [
         // { url: 'https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png', id: '111' },

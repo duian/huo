@@ -105,14 +105,13 @@ class CargoDetail extends React.Component {
 
   // 注册提示弹出层
   handleLoginOpen() {
-    setTimeout(() => (location.href = '/#/login'), 5000);
     this.setState({
       loginVisible: true,
     });
   }
 
   handleJumpLogin() {
-    this.context.router.push('/login');
+    this.context.router.push(`/login?from=cargo/${this.props.params.id}`);
   }
 
   // 上传弹出层
@@ -254,9 +253,9 @@ class CargoDetail extends React.Component {
   // 获取货源信息
   prepareData() {
     const data = {
-      cargoId: this.props.params.id,
-      type: 'CARGO_SIMPLE',
-    };
+        cargoId: this.props.params.id,
+        type: 'CARGO_SIMPLE',
+      };
     const service = 'SERVICE_CARGO';
     this.httpRequest(data, service, (returnData) => {
       const { arrivalCityStr, startCityStr } = returnData.result;

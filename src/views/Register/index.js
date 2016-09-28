@@ -22,9 +22,14 @@ class Login extends Component {
 
   handleSubmit() {
     
-    const carProp = this.props.form.getFieldProps('car').value;
-    const re = new RegExp('[&,?]code=([^//&]*)', 'i');
-    const weChatCode = re.exec(location.href)[1];
+   const carProp = this.props.form.getFieldProps('car').value;
+   const weChatCode = localStorage.getItem('weChatCode');
+   let fromto = this.props.location.search.substring(6);
+
+    if(weChatCode == null){
+      Toast.info('请在微信中浏览器中打开',1);
+      return;
+    }
 
     const data = {
         mobile: this.props.form.getFieldProps('username').value.toString(),
@@ -35,11 +40,12 @@ class Login extends Component {
         weChatCode,
       };
      const service = 'SERVICE_REGISTER';
+
      this.httpRequest(data,service,(returnData)=>{
         localStorage.setItem('uuid', returnData.result.uuid);
+        this.context.router.push(fromto);
      },(returnData)=>{
          Toast.fail(returnData.msg);
-
      });
   }
 
@@ -134,5 +140,8 @@ class Login extends Component {
   }
 }
 
+Register.contextTypes = {
+  router: React.PropTypes.object,
+};
 const _Login = createForm()(Login);
 export default _Login;

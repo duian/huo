@@ -16,27 +16,32 @@ class Login extends Component {
 
  // 登陆请求
   handleSubmit() {
-    const { form } = this.props;
-    // const re = new RegExp('[&,?]code=([^//&]*)', 'i');
-    // const weChatCode = re.exec(location.href)[1];
-    const weChatCode = '123456';
-
+    const { form } = this.props;    
+    console.log(this.props.location);
+    const weChatCode = localStorage.getItem('weChatCode');
+    let fromto = this.props.location.search.substring(6);
+   
+    if(weChatCode == null){
+      Toast.info('请在微信中浏览器中打开',1);
+      return;
+    }
+    
     form.validateFields((errors, values) => {
       if (!!errors) {
         console.log('Errors in form!!!');
         return;
       }
       const data = {
-        mobile: values.username,
-        passWord: values.password,
-        weChatCode,
-      };
+          mobile: values.username,
+          passWord: values.password,
+          weChatCode:weChatCode,
+        };
       const serviceName = 'SERVICE_LOGIN';
-      this.httpRequest(data, serviceName, (returnData) => {
-        localStorage.setItem('uuid', returnData.result.uuid);
-        this.context.router.push('/person');
-      }, (returnData) => {
-        Toast.fail(returnData.msg);
+      this.httpRequest(data,serviceName,(returnData)=>{
+          localStorage.setItem('uuid', returnData.result.uuid);
+          this.context.router.push(fromto);
+      },(returnData)=>{
+          Toast.fail(returnData.msg);
       });
     });
   }
