@@ -195,7 +195,7 @@ class CargoDetail extends React.Component {
               <span className="span-divider"></span>
               {cargoInfo.carLengthStr}
             </div>
-            <div className="info-item">总里程数： {distance ? `${distance}公里` : '暂未计算'}</div>
+            <div className="info-item">总里程数： {distance ? `${distance}公里` : '计算失败'}</div>
           </div>
           <div className="trapezoid">{cargoInfo.statusStr}</div>
         </div>
@@ -253,9 +253,9 @@ class CargoDetail extends React.Component {
   // 获取货源信息
   prepareData() {
     const data = {
-        cargoId: this.props.params.id,
-        type: 'CARGO_SIMPLE',
-      };
+      cargoId: this.props.params.id,
+      type: 'CARGO_SIMPLE',
+    };
     const service = 'SERVICE_CARGO';
     this.httpRequest(data, service, (returnData) => {
       const { arrivalCityStr, startCityStr } = returnData.result;

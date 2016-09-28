@@ -10,43 +10,52 @@ import './_login';
 class Login extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false,
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.httpRequest = postRequest.bind(this);
   }
 
  // 登陆请求
   handleSubmit() {
-    const { form } = this.props;    
+    const { form } = this.props;
+    this.setState({ loading: true });
     console.log(this.props.location);
     const weChatCode = localStorage.getItem('weChatCode');
-    let fromto = this.props.location.search.substring(6);
-   
-    if(weChatCode == null){
-      Toast.info('请在微信中浏览器中打开',1);
+    // const weChatCode = '123456';
+    const fromto = this.props.location.search.substring(6);
+
+    if (weChatCode === null) {
+      Toast.info('请在微信中浏览器中打开', 1);
       return;
     }
-    
+
     form.validateFields((errors, values) => {
       if (!!errors) {
         console.log('Errors in form!!!');
         return;
       }
       const data = {
-          mobile: values.username,
-          passWord: values.password,
-          weChatCode:weChatCode,
-        };
+        mobile: values.username,
+        passWord: values.password,
+        weChatCode,
+      };
       const serviceName = 'SERVICE_LOGIN';
-      this.httpRequest(data,serviceName,(returnData)=>{
-          localStorage.setItem('uuid', returnData.result.uuid);
-          this.context.router.push(fromto);
-      },(returnData)=>{
-          Toast.fail(returnData.msg);
+      this.httpRequest(data, serviceName, (returnData) => {
+        this.setState({ loading: false });
+        localStorage.setItem('uuid', returnData.result.uuid);
+        this.context.router.push(fromto);
+      }, (returnData) => {
+        // this.setState({ loading: false });
+        Toast.fail(returnData.msg);
       });
     });
   }
 
   render() {
+    const { loading } = this.state;
     const { getFieldProps } = this.props.form;
     return (
       <div className="login">
@@ -93,6 +102,7 @@ class Login extends Component {
               </InputItem>
               <WingBlank>
                 <Button
+                  loading={loading}
                   className="login-submit"
                   type="warning"
                   onClick={this.handleSubmit}>

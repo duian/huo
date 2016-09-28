@@ -7,13 +7,14 @@ import './_register';
 import { postRequest } from '../../utils/web';
 import params from '../../utils/params';
 
-class Login extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: params.carType,
       verifyButtonState: false,
       countDown: 60,
+      loading: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sendVerify = _.throttle(this.sendVerify.bind(this), 60000);
@@ -21,32 +22,33 @@ class Login extends Component {
   }
 
   handleSubmit() {
-    
-   const carProp = this.props.form.getFieldProps('car').value;
-   const weChatCode = localStorage.getItem('weChatCode');
-   let fromto = this.props.location.search.substring(6);
+    this.setState({ loading: true });
+    const carProp = this.props.form.getFieldProps('car').value;
+    const weChatCode = localStorage.getItem('weChatCode');
+    const fromto = this.props.location.search.substring(6);
 
-    if(weChatCode == null){
-      Toast.info('请在微信中浏览器中打开',1);
+    if (weChatCode === null) {
+      Toast.info('请在微信中浏览器中打开', 1);
       return;
     }
 
     const data = {
-        mobile: this.props.form.getFieldProps('username').value.toString(),
-        code: this.props.form.getFieldProps('verify').value.toString(),
-        carLength: carProp[0].toString(),
-        carType: carProp[1].toString(),
-        type: 'DRIVER_REGISTER',
-        weChatCode,
-      };
-     const service = 'SERVICE_REGISTER';
+      mobile: this.props.form.getFieldProps('username').value.toString(),
+      code: this.props.form.getFieldProps('verify').value.toString(),
+      carLength: carProp[0].toString(),
+      carType: carProp[1].toString(),
+      type: 'DRIVER_REGISTER',
+      weChatCode,
+    };
+    const service = 'SERVICE_REGISTER';
 
-     this.httpRequest(data,service,(returnData)=>{
-        localStorage.setItem('uuid', returnData.result.uuid);
-        this.context.router.push(fromto);
-     },(returnData)=>{
-         Toast.fail(returnData.msg);
-     });
+    this.httpRequest(data, service, (returnData) => {
+      localStorage.setItem('uuid', returnData.result.uuid);
+      this.setState({ loading: false });
+      this.context.router.push(fromto);
+    }, (returnData) => {
+      Toast.fail(returnData.msg);
+    });
   }
 
   sendVerify() {
@@ -57,18 +59,18 @@ class Login extends Component {
       clearInterval(text);
     }, 60000);
     const data = {
-        mobile: this.props.form.getFieldProps('username').value,
-        type: 'DRIVER_REGISTER',
-      };
-    const  service = 'SERVICE_IDENTIFY_CODE';
-    this.httpRequest(data,service,(returnData)=>{
-       Toast.success(returnData.msg);
-    },(returnData)=>{
-        Toast.fail(returnData.msg);
+      mobile: this.props.form.getFieldProps('username').value,
+      type: 'DRIVER_REGISTER',
+    };
+    const service = 'SERVICE_IDENTIFY_CODE';
+    this.httpRequest(data, service, (returnData) => {
+      Toast.success(returnData.msg);
+    }, (returnData) => {
+      Toast.fail(returnData.msg);
     });
   }
   render() {
-    const { verifyButtonState, countDown } = this.state;
+    const { verifyButtonState, countDown, loading } = this.state;
     const { getFieldProps } = this.props.form;
     const verifyText = verifyButtonState ? `倒计时${countDown}` : '获取验证码';
     return (
@@ -126,6 +128,7 @@ class Login extends Component {
               </Picker>
               <WingBlank>
                 <Button
+                  loading={loading}
                   className="login-submit"
                   type="warning"
                   onClick={this.handleSubmit}>
@@ -143,5 +146,5 @@ class Login extends Component {
 Register.contextTypes = {
   router: React.PropTypes.object,
 };
-const _Login = createForm()(Login);
-export default _Login;
+const _Register = createForm()(Register);
+export default _Register;
