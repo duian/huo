@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { ListView } from 'antd-mobile';
 import { Link } from 'react-router';
-import request from 'superagent-bluebird-promise';
 import { postRequest } from '../../utils/web';
 import './_myCargo';
 
-const NUM_ROWS = 20;
-let pageIndex = 0;
+const NUM_ROWS = 10;
 class MyCargo extends Component {
-
   constructor(props) {
     super(props);
 
@@ -16,21 +13,10 @@ class MyCargo extends Component {
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
 
-    this.genData = (pIndex = 0) => {
-      const dataBlob = {};
-      for (let i = 0; i < NUM_ROWS; i++) {
-        const ii = (pIndex * NUM_ROWS) + i;
-        dataBlob[`${ii}`] = `row - ${ii}`;
-      }
-      return dataBlob;
-    };
-
-    this.rData = {};
     this.state = {
       currPage: 1,
-      totalPage: 2,
       orderList: [],
-      dataSource: ds.cloneWithRows(this.genData()),
+      dataSource: ds,
       isLoading: false,
     };
 
@@ -39,73 +25,56 @@ class MyCargo extends Component {
     this.httpRequest = postRequest.bind(this);
   }
 
-  onEndReached(event) {
-    // load new data
+  onEndReached() {
+    const { currPage, totalPage } = this.state;
+    if (currPage >= totalPage) {
+      return;
+    }
     this.setState({ isLoading: true });
-    setTimeout(() => {
-      this.rData = { ...this.rData, ...this.genData(++pageIndex) };
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.rData),
-        isLoading: false,
-      });
-    }, 1000);
+    this.requestForCargo(this.state.currPage + 1);
   }
 
   componentDidMount() {
-    this.requestForCargo(this.state.currPage = 1);
+    this.requestForCargo(this.state.currPage);
   }
 
   requestForCargo(page) {
     const uuid = localStorage.getItem('uuid');
-    if (page >= this.state.totalPage) {
-      return;
-    }
     if (uuid === undefined) {
       return;
     }
-
     const data = {
-        currPage: page.toString(),
-        type: 'ORDER_LIST_DRIVER',
-      };
+      currPage: page.toString(),
+      type: 'ORDER_LIST_DRIVER',
+    };
     const service = 'SERVICE_ORDER';
-
-    this.httpRequest(data,service,(returnData)=>{
-      
-        this.rData = { ...this.rData, ...this.genData(++pageIndex) };
-        this.setState({
-          currPage: returnData.result.currPage,
-          totalPage: returnData.result.totalPage,
-          orderList: returnData.result.objectArray,
-          dataSource: this.state.dataSource.cloneWithRows(this.rData),
-          isLoading: false,
-        });
-
-    },(returnData)=>{
-
+    this.httpRequest(data, service, (returnData) => {
+      this.setState({
+        currPage: returnData.result.currPage,
+        totalPage: returnData.result.totalPage,
+        orderList: [...this.state.orderList, ...returnData.result.objectArray],
+        dataSource: this.state.dataSource
+        .cloneWithRows([...this.state.orderList, ...returnData.result.objectArray]),
+        isLoading: false,
+      });
+    }, (returnData) => {
+      console.log('retu', returnData);
     });
   }
 
   render() {
-    const { orderList } = this.state;
-    let index = orderList.length;
-    // const separator = (sectionID, rowID) => (
-    //   <div key={`${sectionID}-${rowID}`} style={{
-    //     backgroundColor: '#F5F5F9',
-    //     height: 8,
-    //     borderTop: '1px solid #ECECED',
-    //     borderBottom: '1px solid #ECECED',
-    //   }} />
-    // );
+    const { orderList, currPage } = this.state;
+    let index = orderList.length
     let row;
     if (index <= 0) {
       row = () => <div></div>;
     } else {
       row = (rowData, sectionID, rowID) => {
-        if (index === 0) {
-          return null;
-        }
-        const obj = orderList[orderList.length - (index--)];
+        // if (index === 0) {
+        //   return null;
+        // }
+        const orderIndex = orderList.length - (index--) + (NUM_ROWS * (currPage - 1));
+        const obj = orderList[orderIndex];
         return (
             <Link to={`/my-cargo/${obj.id}`}>
               <div key={rowID}
@@ -136,6 +105,7 @@ class MyCargo extends Component {
         );
       };
     }
+
     return (<div className="cargo">
       <ListView
         dataSource={this.state.dataSource}
