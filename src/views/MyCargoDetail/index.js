@@ -30,6 +30,7 @@ class CargoDetail extends React.Component {
       loadAddressInfo: {},
       unloadAddressInfo: {},
       payInfo: {},
+      distance: null,
     };
 
     this.cloneChildren = this.cloneChildren.bind(this);
@@ -87,6 +88,38 @@ class CargoDetail extends React.Component {
     };
     const service = 'SERVICE_ORDER';
     this.httpRequest(data, service, (returnData) => {
+      const { arrivalCityStr, startCityStr } = returnData.result;
+      const startRequest = request.get(url.mapToPOI)
+      .query({
+        key: url.mapKey,
+        address: startCityStr,
+      });
+      const arrivalRequest = request.get(url.mapToPOI)
+      .query({
+        key: url.mapKey,
+        address: arrivalCityStr,
+      });
+      Promise.all([startRequest, arrivalRequest])
+      .then(res => {
+        const start = res[0].body;
+        const arrive = res[1].body;
+        const origins = start.geocodes[0].location;
+        const destination = arrive.geocodes[0].location;
+        return { origins, destination };
+      })
+      .then(_data => {
+        request.get(url.distance)
+        .query({
+          key: url.mapKey,
+          origins: _data.origins,
+          destination: _data.destination,
+        })
+        .then(res => {
+          let distance = res.body.results[0].distance;
+          distance = Math.round((distance / 1000));
+          this.setState({ distance });
+        });
+      });
       this.setState({
         cargoInfo: returnData.result,
         projectInfo: returnData.result.projectInfo,
@@ -231,6 +264,7 @@ class CargoDetail extends React.Component {
       cargoInfo,
       projectInfo,
       payInfo,
+      distance,
     } = this.state;
     const simpleProjectInfo = [{
       title: '司机人数',
@@ -328,7 +362,7 @@ class CargoDetail extends React.Component {
               <span className="span-divider"></span>
               {cargoInfo.carLengthStr}
             </div>
-            <div className="info-item">总里程数：  暂未计算</div>
+            <div className="info-item">总里程数： {distance ? `${distance}公里` : '暂未计算'}</div>
           </div>
           <div className="trapezoid">{cargoInfo.statusStr}</div>
         </div>
