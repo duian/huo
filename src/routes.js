@@ -17,11 +17,6 @@ import MyCargoDetail from './views/MyCargoDetail';
 import MyCargoSuccess from './views/MyCargoDetail/OfferSuccess';
 import MyCargoMap from './views/MyCargoDetail/Map';
 
-// function redirectToDashboad(nextState, replace) {
-//   if (localStorage.getItem('uuid') !== null) {
-//     replace('/');
-//   }
-// }
 
 function redirectToLogin(nextState, replace) {
   if (localStorage.getItem('uuid') == null) {
@@ -34,7 +29,7 @@ function redirectToCargo(nextState, replace) {
      replace('/cargo');
   }else{
     if( nextState.location.search.indexOf('?from=') === -1){
-      replace('/login?from=cargo');
+      replace(`${nextState.location.pathname}?from=cargo`);
     }
   }
 }
