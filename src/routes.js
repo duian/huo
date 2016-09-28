@@ -24,14 +24,18 @@ import MyCargoMap from './views/MyCargoDetail/Map';
 // }
 
 function redirectToLogin(nextState, replace) {
-  if (localStorage.getItem('uuid') === null) {
-    replace('/login');
+  if (localStorage.getItem('uuid') == null) {
+      replace(`/login?from=${nextState.location.pathname.substring(1)}`);
   }
 }
 
 function redirectToCargo(nextState, replace) {
-  if (localStorage.getItem('uuid') !== null) {
-    replace('/cargo');
+  if (localStorage.getItem('uuid') != null) {
+     replace('/cargo');
+  }else{
+    if( nextState.location.search.indexOf('?from=') === -1){
+      replace('/login?from=cargo');
+    }
   }
 }
 
@@ -42,6 +46,13 @@ class Routes extends React.Component {
   }
 
   render() {
+    const re = new RegExp('[&,?]code=([^//&]*)', 'i');
+    const weChatCodeArr = re.exec(location.href);
+    let weChatCode;
+    if(weChatCodeArr != null){
+      weChatCode = weChatCodeArr[1];
+      localStorage.setItem('weChatCode',weChatCode);
+    }
     return (
       <Router history={hashHistory}>
         <Route path="login" component={Login} onEnter={redirectToCargo}/>
