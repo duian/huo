@@ -146,87 +146,78 @@ class CargoDetail extends React.Component {
     });
   }
 
-  // 确认支付
+   // 确认支付
   postPayInfo() {
     // const uuid = localStorage.getItem('uuid');
     const { orderNum } = this.state.cargoInfo;
     // const re = new RegExp('[&,?]code=([^//&]*)', 'i');
     // const weChatCode = re.exec(location.href)[1];
     const code = '123456';
-    const data = {
-      data: {
+    const data =  {
         code,
         orderNum,
         url: location.href,
         type: 'ORDER_PAY_POST',
-      },
-      service: 'SERVICE_PAY',
-      uuid: '1212',
-      timestamp: '',
-      signatures: '',
-    };
-    request.post(url.webapp)
-    .withCredentials()
-    .send(data)
-    .then(res => {
-      const resultData = JSON.parse(res.text);
-      if (resultData.success) {
-        const {
-          appId,
-          nonceStr,
+      };
+    const   service = 'SERVICE_PAY';
+
+    this.httpRequest(data,service,(returnData)=>{
+      const {
+        appId,
+        nonceStr,
+        timeStamp,
+        signatures,
+        packageName,
+        signType,
+        paySign,
+        outTradeNo,
+      } = resultData.result;
+      wx.config({
+        // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        debug: false,
+        // 必填，公众号的唯一标识
+        appId,
+        // 必填，生成签名的时间戳
+        timeStamp,
+        // 必填，生成签名的随机串
+        nonceStr,
+        // 必填，签名，见附录1
+        signatures,
+        // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        jsApiList: [
+          'checkJsApi',
+          'chooseWXPay',
+        ],
+      });
+      wx.ready(() => {
+        wx.chooseWXPay({
           timeStamp,
-          signatures,
-          packageName,
+          nonceStr,
+          package: packageName,
           signType,
           paySign,
-          outTradeNo,
-        } = resultData.result;
-        wx.config({
-          // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-          debug: false,
-          // 必填，公众号的唯一标识
-          appId,
-          // 必填，生成签名的时间戳
-          timeStamp,
-          // 必填，生成签名的随机串
-          nonceStr,
-          // 必填，签名，见附录1
-          signatures,
-          // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-          jsApiList: [
-            'checkJsApi',
-            'chooseWXPay',
-          ],
-        });
-        wx.ready(() => {
-          wx.chooseWXPay({
-            timeStamp,
-            nonceStr,
-            package: packageName,
-            signType,
-            paySign,
-            success: (res) => {
-              WeixinJSBridge.log(res.err_msg);
-              if (!res.err_msg) {
-                location.href = `mobile/pay/wechat_pay_ok.htm?orderId=${outTradeNo}`;
-              }
+          success: (res) => {
+            WeixinJSBridge.log(res.err_msg);
+            if (!res.err_msg) {
+              location.href = `mobile/pay/wechat_pay_ok.htm?orderId=${outTradeNo}`;
             }
-          });
+          }
         });
+      });
 
-        wx.error((err) => {
-          console.log('res', err);
-        });
+      wx.error((err) => {
+        console.log('res', err);
+      });
 
-        wx.checkJsApi({
-          jsApiList: ['chooseWXPay'],
-          success: () => null,
-        });
-      }
-      return null;
+      wx.checkJsApi({
+        jsApiList: ['chooseWXPay'],
+        success: () => null,
+      });
+      this.handleOfferClose();
+      this.context.router.push(`/my-cargo/${id}/success`);
+    },(returnData)=>{
+
     });
-    // this.handleOfferClose();
-    // this.context.router.push(`/my-cargo/${id}/success`);
   }
 
   renderBtn() {
