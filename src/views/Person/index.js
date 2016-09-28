@@ -129,18 +129,24 @@ class Person extends Component {
 
   renderPaper() {
     const { driverInfo, certifyImg } = this.state;
-    console.log(certifyImg);
-    driverInfo.certifyStatus = 1;
     if (driverInfo.certifyStatus === 0) {
       return (
         <div className="car-img">
           <p>未上传证件</p>
         </div>
       );
-    } else if (driverInfo.certifyStatus === 1) {
+    } else if (driverInfo.certifyStatus === 1 || driverInfo.certifyStatus === 2) {
       return (
         <div className="car-img">
           <p>已上传证件</p>
+          <img src={certifyImg}/>
+          <p className="small">行驶证与驾驶证合照</p>
+        </div>
+      );
+    }else if (driverInfo.certifyStatus === 10 ) {
+      return (
+        <div className="car-img">
+          <p>车辆证件已认证</p>
           <img src={certifyImg}/>
           <p className="small">行驶证与驾驶证合照</p>
         </div>

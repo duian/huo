@@ -6,6 +6,8 @@ import { WingBlank, Table, Button } from 'antd-mobile';
 import './_mycargoDetail';
 import { postRequest } from '../../utils/web';
 import mapIcon from './map-icon.png';
+import request from 'superagent-bluebird-promise';
+import url from '../../utils/url';
 
 const columns = [
   { title: '标题', dataIndex: 'title', key: 'title' },
@@ -104,9 +106,10 @@ class CargoDetail extends React.Component {
     };
     const service = 'SERVICE_PAY';
     this.httpRequest(data, service, (returnData) => {
-      console.log('success', returnData);
+      this.setState({ payInfo: returnData.result });
+      this.handleOfferOpen();
     }, (returnData) => {
-      console.log('return', returnData);
+      console.log('err', returnData);
     });
   }
 
@@ -133,7 +136,7 @@ class CargoDetail extends React.Component {
     .withCredentials()
     .send(data)
     .then(res => {
-      const resultData = handleRes(res);
+      const resultData = JSON.parse(res.text);
       if (resultData.success) {
         const {
           appId,
