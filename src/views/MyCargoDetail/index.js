@@ -333,7 +333,7 @@ class CargoDetail extends React.Component {
     }
 
     return (
-      <div className="cargo-detail">
+      <div className="mycargo-detail">
         <div className="order">订单编号：{cargoInfo.orderNum}</div>
         <div className="info">
           <div className="info-place">

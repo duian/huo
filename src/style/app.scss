@@ -87,6 +87,7 @@
 .person {
   .am-list-item {
     min-height: 58px;
+    padding-left: 24px;
   }
   .am-list-item .am-list-line {
     min-height: 58px;
@@ -183,4 +184,9 @@
   & > div {
     font-size: 18px!important;
   }
+}
+
+// 弹出层
+.am-modal-mask {
+  background-color: rgba(0, 0, 0, 0.7)!important;
 }

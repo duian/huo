@@ -23,8 +23,8 @@ class Login extends Component {
     const { form } = this.props;
     this.setState({ loading: true });
     console.log(this.props.location);
-    const weChatCode = localStorage.getItem('weChatCode');
-    // const weChatCode = '123456';
+    // const weChatCode = localStorage.getItem('weChatCode');
+    const weChatCode = '123456';
     const fromto = this.props.location.search.substring(6);
 
     if (weChatCode === null) {
@@ -48,7 +48,7 @@ class Login extends Component {
         localStorage.setItem('uuid', returnData.result.uuid);
         this.context.router.push(fromto);
       }, (returnData) => {
-        // this.setState({ loading: false });
+        this.setState({ loading: false });
         Toast.fail(returnData.msg);
       });
     });

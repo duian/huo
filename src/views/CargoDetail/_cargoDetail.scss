@@ -1,8 +1,9 @@
 .cargo-detail {
+  background: #fff;
   .info {
     position: relative;
     background: #75aade;
-    height: 150px;
+    height: 136px;
     color: #fff;
     padding: 20px 16px;
 
@@ -22,6 +23,14 @@
     margin-left: 30px;
     padding-bottom: 14px;
     border-bottom: 1px solid #cfcfcf;
+    color: #4c4c4c;
+    font-size: 20px;
+    margin-bottom: 18px;
+    margin-left: 18px;
+  }
+  .am-wingblank.am-wingblank-lg {
+    margin-left: 18px;
+    margin-right: 18px;
   }
   .am-table {
     border: 1px solid #cfcfcf;
@@ -60,6 +69,9 @@
     height: 50px;
     letter-spacing: 5px;
     font-size: 18px;
+    &:after {
+      content: none;
+    }
   }
 }
 .global {
@@ -134,7 +146,7 @@
   padding: 8px 25px;
 }
 .cargo-offer {
-  margin-top: 15px;
+  // margin-top: 15px;
   padding: 18px 20px;
   .divider {
     display: inline-block;
@@ -144,6 +156,7 @@
     color: #8a8a8a;
     line-height: 24px;
     text-align: left;
+    font-size: 16px;
   }
   .offer {
     margin-top: 20px;
