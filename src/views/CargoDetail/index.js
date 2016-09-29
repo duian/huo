@@ -1,6 +1,5 @@
 import React from 'react';
 import Offer from './Offer';
-import Upload from './Upload';
 import { WingBlank, Table, Button, Modal } from 'antd-mobile';
 import './_cargoDetail';
 import { postRequest } from '../../utils/web';
@@ -24,8 +23,6 @@ class CargoDetail extends React.Component {
       loginVisible: false,
       // 详情
       offerVisible: false,
-      // 上传
-      uploadVisible: false,
       cargoInfo: {},
       projectInfo: {},
       submited: false,
@@ -43,9 +40,6 @@ class CargoDetail extends React.Component {
     this.handleOfferClose = this.handleOfferClose.bind(this);
     this.handleLoginOpen = this.handleLoginOpen.bind(this);
     this.handleJumpLogin = this.handleJumpLogin.bind(this);
-
-    this.handleUploadOpen = this.handleUploadOpen.bind(this);
-    this.handleUploadClose = this.handleUploadClose.bind(this);
 
     this.renderOffer = this.renderOffer.bind(this);
     this.renderBtn = this.renderBtn.bind(this);
@@ -114,15 +108,6 @@ class CargoDetail extends React.Component {
     this.context.router.push(`/login?from=cargo/${this.props.params.id}`);
   }
 
-  // 上传弹出层
-  handleUploadOpen() {
-    this.setState({ uploadVisible: true });
-  }
-
-  handleUploadClose() {
-    this.setState({ uploadVisible: false });
-  }
-
   handleOfferClose() {
     this.setState({ offerVisible: false });
   }
@@ -147,7 +132,6 @@ class CargoDetail extends React.Component {
       messageVisible,
       loginVisible,
       offerVisible,
-      uploadVisible,
       submited,
       distance,
     } = this.state;
@@ -236,10 +220,6 @@ class CargoDetail extends React.Component {
           {
             offerVisible === true ? this.renderOffer() : null
           }
-          <Upload
-            visible={uploadVisible}
-            onClose={this.handleUploadClose}
-          />
         </WingBlank>
         { submited === false ? this.renderBtn() : null }
       </div>
