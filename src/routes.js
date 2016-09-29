@@ -19,16 +19,16 @@ import MyCargoMap from './views/MyCargoDetail/Map';
 
 
 function redirectToLogin(nextState, replace) {
-  if (localStorage.getItem('uuid') == null) {
-      replace(`/login?from=${nextState.location.pathname.substring(1)}`);
+  if (localStorage.getItem('uuid') === null) {
+    replace(`/login?from=${nextState.location.pathname.substring(1)}`);
   }
 }
 
 function redirectToCargo(nextState, replace) {
-  if (localStorage.getItem('uuid') != null) {
-     replace('/cargo');
-  }else{
-    if( nextState.location.search.indexOf('?from=') === -1){
+  if (localStorage.getItem('uuid') !== null) {
+    replace('/cargo');
+  } else {
+    if (nextState.location.search.indexOf('?from=') === -1) {
       replace(`${nextState.location.pathname}?from=cargo`);
     }
   }
@@ -44,9 +44,9 @@ class Routes extends React.Component {
     const re = new RegExp('[&,?]code=([^//&]*)', 'i');
     const weChatCodeArr = re.exec(location.href);
     let weChatCode;
-    if(weChatCodeArr != null){
+    if (weChatCodeArr !== null) {
       weChatCode = weChatCodeArr[1];
-      localStorage.setItem('weChatCode',weChatCode);
+      localStorage.setItem('weChatCode', weChatCode);
     }
     return (
       <Router history={hashHistory}>
