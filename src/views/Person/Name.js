@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { InputItem, WingBlank, Toast, Button } from 'antd-mobile';
 import { createForm } from 'rc-form';
-import postRequest from '../../utils/web';
+import { postRequest } from '../../utils/web';
 
 class Name extends Component {
   constructor(props) {
@@ -47,18 +47,18 @@ class Name extends Component {
       return;
     }
     const data = {
-        name,
-        type: 'DRIVER_NAME',
-      };
-    const  service = 'SERVICE_DRIVER';
-    
-    this.httpRequest(data,service,(returnData)=>{
+      name,
+      type: 'DRIVER_NAME',
+    };
+    const service = 'SERVICE_DRIVER';
+
+    this.httpRequest(data, service, () => {
       const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
       driverInfo.name = name;
       localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
       this.context.router.push('/person');
-    },(returnData)=>{
-        
+    }, (returnData) => {
+      console.log('err', returnData);
     });
   }
 }

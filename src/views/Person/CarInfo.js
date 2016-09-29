@@ -34,7 +34,7 @@ class CarInfo extends Component {
             extra="请选择车长车型"
             data={this.state.data}
             >
-            <List.Item>
+            <List.Item className="underline">
             </List.Item>
           </Picker>
         </List>

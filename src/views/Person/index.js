@@ -11,7 +11,7 @@ class Person extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       files: [
         // { url: 'https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png', id: '111' },
@@ -31,27 +31,27 @@ class Person extends Component {
   }
 
 
-  modifyDriverInfo(e){
+  // modifyDriverInfo() {
+  modifyDriverInfo(e) {
     const { driverInfo } = this.state;
-    if(driverInfo.driverStatus === 10){
+    if (driverInfo.driverStatus === 10) {
       e.preventDefault();
-      Toast.info('您已认证，不能编辑信息',0.8);
-      return false;
-    }
-    return true;
-  }
-  
-  modifyCertifyImg(e){
-    const { driverInfo } = this.state;
-    if(driverInfo.certifyStatus === 10){
-      e.preventDefault();
-      Toast.info('车辆信息已认证，不能编辑信息',0.8);
+      Toast.info('您已认证，不能编辑信息', 0.8);
       return false;
     }
     return true;
   }
 
- 
+  // modifyCertifyImg() {
+  modifyCertifyImg(e) {
+    const { driverInfo } = this.state;
+    if (driverInfo.certifyStatus === 10) {
+      e.preventDefault();
+      Toast.info('车辆信息已认证，不能编辑信息', 0.8);
+      return false;
+    }
+    return true;
+  }
 
   cloneChildren() {
     const path = this.props.location.pathname;
@@ -69,22 +69,20 @@ class Person extends Component {
       return;
     }
     const data = {
-        type: 'DRIVER_INFO',
-      };
+      type: 'DRIVER_INFO',
+    };
     const service = 'SERVICE_DRIVER';
-    this.httpRequest(data,service,(returnData)=>{
+    this.httpRequest(data, service, (returnData) => {
+      if (returnData.result.imageName) {
+        this.getImage(returnData.result.imageName);
+      }
 
-        if (returnData.result.imageName) {
-          this.getImage(returnData.result.imageName);
-        }
-
-        this.setState({
-          driverInfo: returnData.result,
-        });
+      this.setState({
+        driverInfo: returnData.result,
+      });
         // localStorage.setItem('driverInfo', JSON.stringify(returnData.result));
-
-    },(returnData)=>{
-
+    }, (returnData) => {
+      console.log('err', returnData);
     });
   }
 
@@ -143,7 +141,7 @@ class Person extends Component {
           <p className="small">行驶证与驾驶证合照</p>
         </div>
       );
-    }else if (driverInfo.certifyStatus === 10 ) {
+    } else if (driverInfo.certifyStatus === 10) {
       return (
         <div className="car-img">
           <p>车辆证件已认证</p>

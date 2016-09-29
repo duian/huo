@@ -21,8 +21,8 @@ class Weight extends Component {
     return (
       <div className="page">
         <Picker
-          {...getFieldProps('carAxis',{
-            initialValue:carAxis
+          {...getFieldProps('carAxis', {
+            initialValue: [parseInt(carAxis, 10)],
           })}
           className="reg-picker"
           labelNumber={1}
@@ -30,7 +30,7 @@ class Weight extends Component {
           extra="请选择车轴数量"
           data={this.state.data}
         >
-          <List.Item>
+          <List.Item className="underline">
           </List.Item>
         </Picker>
         <InputItem
@@ -86,19 +86,21 @@ class Weight extends Component {
         return;
       }
       const data = {
-          cubic: values.cubic.toString(),
-          weight: values.weight.toString(),
-          type: 'DRIVER_CAR_WEIGHT',
+        cubic: values.cubic.toString(),
+        weight: values.weight.toString(),
+        carAxis: values.carAxis.toString(),
+        type: 'DRIVER_CAR_WEIGHT',
       };
       const service = 'SERVICE_DRIVER';
-      this.httpRequest(data,service,(returnData)=>{
+      this.httpRequest(data, service, () => {
         const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
-        driverInfo.weight = weight.toString();
-        driverInfo.cubic = cubic.toString();
+        driverInfo.weight = values.weight.toString();
+        driverInfo.cubic = values.cubic.toString();
+        driverInfo.carAxis = values.carAxis.toString();
         localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
         this.context.router.push('/person');
-      },(returnData)=>{
-          Toast.fail(returnData.msg);
+      }, (returnData) => {
+        Toast.fail(returnData.msg);
       });
     });
   }
