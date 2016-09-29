@@ -1,4 +1,12 @@
 .mycargo {
+  // 微信顶部有1像素的空隙，hack
+  margin-top: -1px;
+  .am-list .am-list-body:after {
+    border: none;
+  }
+  .am-list-body {
+    background: #f9f8f4;
+  }
   .am-list-header {
     display: none;
   }
@@ -9,7 +17,8 @@
     border-top: 1px solid #6daadd;
     border-bottom: 1px solid #6daadd;
     position: relative;
-    height: 80px;
+    height: 76px;
+    background: #fff;
     .panel-info {
       position: relative;
       width: 116px;
