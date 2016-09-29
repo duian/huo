@@ -76,7 +76,7 @@ class MyCargo extends Component {
         const orderIndex = orderList.length - (index--) + (NUM_ROWS * (currPage - 1));
         const obj = orderList[orderIndex];
         return (
-            <Link to={`/my-cargo/${obj.id}`}>
+            <a href={`?/#/my-cargo/${obj.id}`}>
               <div key={rowID}
                 style={{
                   backgroundColor: 'white',
@@ -101,7 +101,7 @@ class MyCargo extends Component {
                   </div>
                   <div className="trapezoid">{obj.statusStr}</div>
               </div>
-            </Link>
+            </a>
         );
       };
     }

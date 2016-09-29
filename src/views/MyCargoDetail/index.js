@@ -153,15 +153,15 @@ class CargoDetail extends React.Component {
     // const re = new RegExp('[&,?]code=([^//&]*)', 'i');
     // const weChatCode = re.exec(location.href)[1];
     const code = '123456';
-    const data =  {
-        code,
-        orderNum,
-        url: location.href,
-        type: 'ORDER_PAY_POST',
-      };
-    const   service = 'SERVICE_PAY';
+    const data = {
+      code,
+      orderNum,
+      url: location.href,
+      type: 'ORDER_PAY_POST',
+    };
+    const service = 'SERVICE_PAY';
 
-    this.httpRequest(data,service,(returnData)=>{
+    this.httpRequest(data, service, (returnData) => {
       const {
         appId,
         nonceStr,
@@ -178,7 +178,7 @@ class CargoDetail extends React.Component {
         // 必填，公众号的唯一标识
         appId,
         // 必填，生成签名的时间戳
-        timeStamp,
+        timestamp: timeStamp,
         // 必填，生成签名的随机串
         nonceStr,
         // 必填，签名，见附录1
@@ -191,7 +191,7 @@ class CargoDetail extends React.Component {
       });
       wx.ready(() => {
         wx.chooseWXPay({
-          timeStamp,
+          timestamp:timeStamp,
           nonceStr,
           package: packageName,
           signType,
@@ -214,8 +214,8 @@ class CargoDetail extends React.Component {
         success: () => null,
       });
       this.handleOfferClose();
-      this.context.router.push(`/my-cargo/${id}/success`);
-    },(returnData)=>{
+      this.context.router.push(`/my-cargo/${this.props.params.id}/success`);
+    }, (returnData)=>{
 
     });
   }
