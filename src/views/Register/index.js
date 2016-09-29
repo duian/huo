@@ -74,15 +74,15 @@ class Register extends Component {
     const { getFieldProps } = this.props.form;
     const verifyText = verifyButtonState ? `倒计时${countDown}` : '获取验证码';
     return (
-      <div className="login">
-        <div className="login-bg">
+      <div className="register">
+        <div className="register-bg">
           <h3 className="logo">货管家</h3>
-            <div className="login-menu">
+            <div className="register-menu">
               <Link to="register" activeClassName="active">注册</Link>
               <Link to="login" activeClassName="active">登录</Link>
             </div>
         </div>
-        <div className="login-body">
+        <div className="register-body">
           <List>
             <List.Body>
               <InputItem
@@ -129,7 +129,7 @@ class Register extends Component {
               <WingBlank>
                 <Button
                   loading={loading}
-                  className="login-submit"
+                  className="register-submit"
                   type="warning"
                   onClick={this.handleSubmit}>
                   确定

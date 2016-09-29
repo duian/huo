@@ -1,4 +1,4 @@
-.login {
+.login, .register {
   overflow-y: hidden;
   .am-list .am-list-item.am-input-item {
     min-height: 50px;
@@ -14,11 +14,11 @@
     font-size: 14px;
     &::-webkit-input-placeholder {
       font-size: 14px;
-      color: #939393;
+      color: #898989;
     }
   }
   .anticon:before {
-    color: #939393;
+    color: #898989;
     font-size: 14px;
   }
   .am-list-item .am-list-line .am-list-content, .am-list-item .am-list-line .am-list-extra {
@@ -172,7 +172,7 @@
 .am-list .am-list-item .am-input-clear {
   width: 21px!important;
   height: 21px!important;
-  background-size: 21px auto;
+  background-size: 21px auto!important;
 }
 
 // Toast
