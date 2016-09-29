@@ -14,18 +14,12 @@ class Offer extends React.Component {
 
     this.handleClose = this.handleClose.bind(this);
     this.handleOffer = this.handleOffer.bind(this);
-    this.handleTypeToggle = this.handleTypeToggle.bind(this);
     // 单价变化
     this.handleUnitChange = this.handleUnitChange.bind(this);
     // 总价变化
     this.handleTotalPriceChange = this.handleTotalPriceChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
     this.httpRequest = postRequest.bind(this);
-  }
-
-  handleTypeToggle() {
-    const { unitType } = this.state;
-    this.setState({ unitType: (unitType === 1 ? 2 : 1) });
   }
 
   handleClose() {
