@@ -10,6 +10,7 @@ class Offer extends React.Component {
     const { cargoInfo } = this.props;
     this.state = {
       unitType: cargoInfo.unitType,
+      isRequesting: false,
     };
 
     this.handleClose = this.handleClose.bind(this);
@@ -29,9 +30,12 @@ class Offer extends React.Component {
 
   handleOffer() {
     const uuid = localStorage.getItem('uuid');
-    if (uuid === undefined) {
+    if (uuid === undefined || this.state.isRequesting) {
       return;
     }
+    this.setState({
+      isRequesting: true,
+    });
     const { unitType } = this.state;
     const { cargoInfo, form } = this.props;
     const values = form.getFieldsValue();
@@ -50,8 +54,10 @@ class Offer extends React.Component {
         this.props.onHidden();
     },(returnData)=>{
         Toast.fail(returnData.msg);
+        this.setState({
+          isRequesting: false,
+        });
     });
-
   }
 
   handleUnitChange(val) {

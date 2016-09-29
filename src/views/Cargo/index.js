@@ -60,6 +60,9 @@ class Cargo extends Component {
         isLoading: false,
       });
     }, (returnData) => {
+      this.setState({
+        isLoading: false,
+      });
       console.log('err', returnData);
     });
   }
