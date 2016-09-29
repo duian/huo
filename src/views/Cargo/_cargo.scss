@@ -2,9 +2,13 @@ body {
   // overflow: hidden;
 }
 .cargo {
+  // 微信顶部有1像素的空隙，hack
+  margin-top: -1px;
   .am-list {
-    // height: 600px;
-    // overflow: auto;
+    // background: #000;
+  }
+  .am-list-body {
+    // background: #000;
   }
   .am-list-header {
     display: none;

@@ -28,7 +28,7 @@ class MyCargo extends Component {
   onEndReached() {
     const { currPage, totalPage, isLoading } = this.state;
     if (currPage >= totalPage || isLoading) {
-      // 当页数大于等于总页数或者数据正在加载 
+      // 当页数大于等于总页数或者数据正在加载
       return;
     }
     this.setState({ isLoading: true });
@@ -108,7 +108,7 @@ class MyCargo extends Component {
       };
     }
 
-    return (<div className="cargo">
+    return (<div className="mycargo">
       <ListView
         dataSource={this.state.dataSource}
         renderHeader={() => <span>header</span>}
