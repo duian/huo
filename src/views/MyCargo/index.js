@@ -26,8 +26,9 @@ class MyCargo extends Component {
   }
 
   onEndReached() {
-    const { currPage, totalPage } = this.state;
-    if (currPage >= totalPage) {
+    const { currPage, totalPage, isLoading } = this.state;
+    if (currPage >= totalPage || isLoading) {
+      // 当页数大于等于总页数或者数据正在加载 
       return;
     }
     this.setState({ isLoading: true });
@@ -39,6 +40,7 @@ class MyCargo extends Component {
   }
 
   requestForCargo(page) {
+
     const uuid = localStorage.getItem('uuid');
     if (uuid === undefined) {
       return;

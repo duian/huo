@@ -163,7 +163,8 @@ class Person extends Component {
       <div className="person">
         <div className="panel">
           <div className="panel-media">
-            <img src="https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png"/>
+            <div className="person-logo">
+            </div>
           </div>
           <div className="panel-text">
             <h4 className="panel-text-title">

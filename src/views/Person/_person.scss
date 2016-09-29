@@ -199,6 +199,13 @@
       padding-left: 70px;
     }
   }
+  .person-logo {
+    width: 50px;
+    height: 50px;
+    background: #000 url(./logo.png) no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
 }
 .edit-tag {
   position: relative;
