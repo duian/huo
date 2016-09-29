@@ -1,39 +1,70 @@
 import React from 'react';
 import request from 'superagent-bluebird-promise';
+import url from '../../utils/url';
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      active: 'gaosu',
+      active: 'LEAST_TIME',
     };
 
     this.handleActive = this.handleActive.bind(this);
+    this.fetchPath = this.fetchPath.bind(this);
     this.renderMenu = this.renderMenu.bind(this);
   }
 
   handleActive(type, e) {
     e.preventDefault();
+    if (type === this.state.type) {
+      return null;
+    }
     this.setState({ active: type });
+    return this.fetchPath(this.state.center, type);
   }
 
   renderMenu() {
     const { active } = this.state;
-    if (active === 'gaosu') {
+    if (active === 'LEAST_TIME') {
       return (
         <div className="map-menu">
-          <a href="#" onClick={this.handleActive.bind(this, 'gaosu')} className="active">高速优先</a>
-          <a href="#" onClick={this.handleActive.bind(this, 'guodao')}>国道/省道</a>
+          <a href="#" onClick={this.handleActive.bind(this, 'LEAST_TIME')} className="active">
+            高速优先
+          </a>
+          <a href="#" onClick={this.handleActive.bind(this, 'LEAST_FEE')}>
+            国道/省道
+          </a>
         </div>
       );
     }
     return (
       <div className="map-menu">
-        <a href="#" onClick={this.handleActive.bind(this, 'gaosu')}>高速优先</a>
-        <a href="#" onClick={this.handleActive.bind(this, 'guodao')} className="active">国道/省道</a>
+        <a href="#" onClick={this.handleActive.bind(this, 'LEAST_TIME')}>高速优先</a>
+        <a href="#" onClick={this.handleActive.bind(this, 'LEAST_FEE')} className="active">国道/省道</a>
       </div>
     );
+  }
+
+  fetchPath(center, policy) {
+    const { cargoInfo } = this.props;
+    const { startCityStr, arrivalCityStr } = cargoInfo;
+    const map = new AMap.Map('container');
+    map.setZoom(10);
+    map.setCenter(center);
+    AMap.service(['AMap.Driving'], () => {
+      const driving = new AMap.Driving({
+        map,
+        // panel: 'container',
+        policy,
+      });
+      driving.search([
+        { city: startCityStr },
+        { city: arrivalCityStr },
+      ], (status, result) => {
+        console.log('st', status, result);
+      });
+    });
   }
 
   componentDidMount() {
@@ -43,17 +74,19 @@ class Map extends React.Component {
       const { startCityStr } = cargoInfo;
       request.get('http://restapi.amap.com/v3/geocode/geo')
       .query({
-        key: '4932838f85177d06a6b9ba2c2e9b7964',
+        key: url.mapKey,
         address: startCityStr,
       })
       .then((res) => {
         const data = res.body;
         const center = data.geocodes[0].location.split(',');
-        console.log('res geo', center);
-        const map = new AMap.Map('container');
-        map.setZoom(10);
-        map.setCenter(center);
+        this.setState({ center });
+        this.fetchPath(center, 'LEAST_TIME');
         return null;
+      })
+      .catch(err => {
+        const errInfo = err.body;
+        console.log('err', errInfo);
       });
     }
   }
@@ -63,7 +96,7 @@ class Map extends React.Component {
   }
   render() {
     return (
-      <div className="page">
+      <div className="page map-detail">
         <div>
           {this.renderMenu()}
           <div id="container" style={{
