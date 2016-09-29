@@ -82,11 +82,6 @@ class Cargo extends Component {
         const obj = cargoList[cargoIndex];
         return (
           <Link to={`/cargo/${obj.cargoId}`}>
-            <div key={rowID}
-              style={{
-                backgroundColor: 'white',
-              }}
-            />
             <div className="panel">
                 <div className="panel-info">
                   <div>{obj.sendTimeStr}</div>

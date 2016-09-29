@@ -8,7 +8,7 @@ body {
     // background: #000;
   }
   .am-list-body {
-    // background: #000;
+    background: #f9f8f4;
   }
   .am-list-header {
     display: none;
@@ -16,17 +16,18 @@ body {
   .panel {
     display: -webkit-box;
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     border-top: 1px solid #6daadd;
     border-bottom: 1px solid #6daadd;
     position: relative;
-    height: 80px;
+    height: 76px;
+    background: #fff;
     .panel-info {
       position: relative;
       width: 116px;
       height: 46px;
       margin-right: 12px;
-      padding: 17px 0;
+      padding: 15px 0;
       background: #75aade;
       color: #fff;
       font-size: 16px;
