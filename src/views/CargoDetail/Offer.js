@@ -50,6 +50,7 @@ class Offer extends React.Component {
     const serviceName = 'SERVICE_CARGO';
 
     this.httpRequest(data,serviceName,(returnData)=>{
+        Toast.fail(returnData.msg);
         this.props.onClose();
         this.props.onHidden();
     },(returnData)=>{
