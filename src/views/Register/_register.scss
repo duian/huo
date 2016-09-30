@@ -121,6 +121,16 @@
       color: #000;
     }
   }
+  .am-list-item.car .am-list-line .am-list-content {
+    position: relative;
+    height: 50px;
+    padding-right: 22px;
+  }
+  .am-list-item .am-list-line .am-list-extra {
+    -webkit-box-flex: 6;
+    flex: 3;
+    text-align: left;
+  }
   .verify {
     position: absolute;
     top: 13px;
