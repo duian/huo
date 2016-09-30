@@ -207,7 +207,8 @@ class CargoDetail extends React.Component {
           success: (res) => {
             WeixinJSBridge.log(res.err_msg);
             if (!res.err_msg) {
-              location.href = `mobile/pay/wechat_pay_ok.htm?orderId=${outTradeNo}`;
+              this.handleOfferClose();
+              this.context.router.push('/my-cargo');
             }
           },
           cancel: (res)=>{
@@ -225,8 +226,6 @@ class CargoDetail extends React.Component {
         jsApiList: ['chooseWXPay'],
         success: () => null,
       });
-      this.handleOfferClose();
-      this.context.router.push(`/my-cargo/${this.props.params.id}/success`);
     }, (returnData)=>{
 
     });
