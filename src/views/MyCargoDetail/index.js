@@ -37,7 +37,7 @@ class CargoDetail extends React.Component {
 
     this.handleOfferOpen = this.handleOfferOpen.bind(this);
     this.handleOfferClose = this.handleOfferClose.bind(this);
-
+    this.cancelPay = this.cancelPay.bind(this);
     // 支付按钮
     this.renderBtn = this.renderBtn.bind(this);
     // 地址
@@ -146,6 +146,19 @@ class CargoDetail extends React.Component {
     });
   }
 
+
+  // 取消支付
+  cancelPay(){
+    const { id } = this.props.params;
+    const { orderNum } = this.state.cargoInfo;
+    const data = {
+      orderNum,
+      type: 'ORDER_PAY_CANCEL',
+    };
+    const service = 'SERVICE_PAY';
+    this.httpRequest(data, service);
+  }
+
    // 确认支付
   postPayInfo() {
     // const uuid = localStorage.getItem('uuid');
@@ -201,6 +214,10 @@ class CargoDetail extends React.Component {
             if (!res.err_msg) {
               location.href = `mobile/pay/wechat_pay_ok.htm?orderId=${outTradeNo}`;
             }
+          },
+          cancel: (res)=>{
+            // 支付取消
+            this.cancelPay();
           }
         });
       });
