@@ -184,7 +184,8 @@ class CargoDetail extends React.Component {
           <div className="trapezoid">{cargoInfo.statusStr}</div>
         </div>
         <div className="cargo-content">
-          <div>
+          <div className="title-wrapper">
+            <i className="icon icon-project"/>
             <h4 className="title">项目信息</h4>
           </div>
           <WingBlank>

@@ -39,24 +39,36 @@
       border-bottom: 1px solid #cfcfcf;
     }
   }
-  .title {
+  .title-wrapper {
     position: relative;
-    padding-bottom: 14px;
-    color: #4c4c4c;
-    font-size: 18px;
-    margin-top: 0;
-    margin-bottom: 18px;
-    margin-left: 18px;
-    &:after {
+    .icon-project {
       position: absolute;
-      left: 0;
-      top: 0;
-      width: 200%;
-      height: 200%;
-      content: " ";
-      transform: scale(0.5);
-      transform-origin: 0 0;
-      border-bottom: 1px solid #cfcfcf;
+      left: 18px;
+      top: -1px;
+      width: 20px;
+      height: 20px;
+      background: url(./project.png) no-repeat;
+      background-size: cover;
+    }
+    .title {
+      position: relative;
+      padding-bottom: 14px;
+      color: #4c4c4c;
+      font-size: 18px;
+      margin-top: 0;
+      margin-left: 18px;
+      padding-left: 24px;
+      &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200%;
+        height: 200%;
+        content: " ";
+        transform: scale(0.5);
+        transform-origin: 0 0;
+        border-bottom: 1px solid #cfcfcf;
+      }
     }
   }
   .am-wingblank.am-wingblank-lg {

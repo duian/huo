@@ -247,8 +247,11 @@ class CargoDetail extends React.Component {
       unloadAddressInfo,
     } = this.state;
     return (
-      <div className="block">
-        <h4 className="title">装卸货信息</h4>
+      <div className="mycargo-content">
+        <div className="title-wrapper">
+          <i className="icon icon-info"></i>
+          <h4 className="title">装卸货信息</h4>
+        </div>
         <div className="people-info">
           <div className="people-info-item">
             <div>装货地址: {loadAddressInfo.address}</div>
@@ -375,20 +378,23 @@ class CargoDetail extends React.Component {
           <div className="trapezoid">{cargoInfo.statusStr}</div>
         </div>
         <div className="block mycargo-content">
-          <h4 className="title">项目信息</h4>
-            <WingBlank>
-              <Table
-                direction="horizon"
-                columns={columns}
-                dataSource={data}
-              />
-              <Offer
-                onSubmit={this.postPayInfo}
-                visible={offerVisible}
-                onClose={this.handleOfferClose}
-                payInfo={payInfo}
-              />
-            </WingBlank>
+          <div className="title-wrapper">
+            <i className="icon icon-project"></i>
+            <h4 className="title">项目信息</h4>
+          </div>
+          <WingBlank>
+            <Table
+              direction="horizon"
+              columns={columns}
+              dataSource={data}
+            />
+            <Offer
+              onSubmit={this.postPayInfo}
+              visible={offerVisible}
+              onClose={this.handleOfferClose}
+              payInfo={payInfo}
+            />
+          </WingBlank>
         </div>
         { Number.parseInt(cargoInfo.status, 10) > 99 ? this.renderAddress() : null}
         { Number.parseInt(cargoInfo.status, 10) === 99 ? this.renderBtn() : null}
