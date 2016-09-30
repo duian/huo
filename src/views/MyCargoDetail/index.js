@@ -374,7 +374,7 @@ class CargoDetail extends React.Component {
           </div>
           <div className="trapezoid">{cargoInfo.statusStr}</div>
         </div>
-        <div className="block">
+        <div className="block mycargo-content">
           <h4 className="title">项目信息</h4>
             <WingBlank>
               <Table

@@ -1,16 +1,35 @@
 .mycargo-detail {
   background: #f9f8f4;
   padding-bottom: 40px;
-  margin-bottom: 40px;
-  .block {
+  .mycargo-content {
+    position: relative;
     background: #fff;
-    padding-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    &:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200%;
+      height: 200%;
+      content: " ";
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      border-top: 1px solid #cfcfcf;
+      border-bottom: 1px solid #cfcfcf;
+    }
   }
+  // .block {
+  //   background: #fff;
+  //   padding-bottom: 15px;
+  // }
   .order {
     background: #dad7d0;
     color: #000;
     line-height: 30px;
     padding-left: 15px;
+    font-size: 16px;
   }
   .info {
     position: relative;
@@ -32,10 +51,24 @@
     }
   }
   .title {
-    margin-left: 30px;
-    padding-top: 14px;
+    position: relative;
     padding-bottom: 14px;
-    border-bottom: 1px solid #cfcfcf;
+    color: #4c4c4c;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 18px;
+    margin-left: 18px;
+    &:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200%;
+      height: 200%;
+      content: " ";
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      border-bottom: 1px solid #cfcfcf;
+    }
   }
   .am-table {
     border: 1px solid #cfcfcf;
