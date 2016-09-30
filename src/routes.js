@@ -25,6 +25,7 @@ function redirectToLogin(nextState, replace) {
 }
 
 function redirectToCargo(nextState, replace) {
+  localStorage.removeItem('uuid'); // 需要删除
   if (localStorage.getItem('uuid') !== null) {
     replace('/cargo');
   } else {
