@@ -127,7 +127,7 @@ class MyCargo extends Component {
         onEndReached={this.onEndReached}
         onEndReachedThreshold={10}
       />
-      <a className="help" href="tel:4006685495">联系客服</a>
+      <a className="help" href="tel:4006685495"></a>
     </div>);
   }
 
