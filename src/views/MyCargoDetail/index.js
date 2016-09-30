@@ -165,7 +165,7 @@ class CargoDetail extends React.Component {
     const { orderNum } = this.state.cargoInfo;
     // const re = new RegExp('[&,?]code=([^//&]*)', 'i');
     // const weChatCode = re.exec(location.href)[1];
-    const code = '123456';
+    
     const data = {
       code,
       orderNum,

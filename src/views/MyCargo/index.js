@@ -63,7 +63,6 @@ class MyCargo extends Component {
       this.setState({
         isLoading: false,
       });
-      console.log('retu', returnData);
     });
   }
 

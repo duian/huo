@@ -23,8 +23,7 @@ class Login extends Component {
     const { form } = this.props;
     this.setState({ loading: true });
     console.log(this.props.location);
-    // const weChatCode = localStorage.getItem('weChatCode');
-    const weChatCode = '123456';
+    const weChatCode = localStorage.getItem('weChatCode');
     const fromto = this.props.location.search.substring(6);
 
     if (weChatCode === null) {

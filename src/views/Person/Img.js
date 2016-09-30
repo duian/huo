@@ -14,7 +14,7 @@ class Img extends React.Component {
     this.state = {
       files: [],
     };
-
+    
     this.openDrop = this.openDrop.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
