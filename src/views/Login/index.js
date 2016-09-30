@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { createForm } from 'rc-form';
-import { Icon, List, InputItem, Toast, Button, WingBlank } from 'antd-mobile';
+import { List, InputItem, Toast, Button, WingBlank } from 'antd-mobile';
 // import request from 'superagent-bluebird-promise';
 import { postRequest } from '../../utils/web';
 import './_login';
@@ -83,7 +83,7 @@ class Login extends Component {
                 maxLength={11}
                 clear
               >
-                <Icon type="mobile"/>
+                <span className="icon icon-mobile"/>
               </InputItem>
               <InputItem
                 {...getFieldProps('password', {
@@ -98,7 +98,7 @@ class Login extends Component {
                 labelNumber={2}
                 clear
               >
-                <Icon type="lock"/>
+                <span className="icon icon-lock"/>
               </InputItem>
               <WingBlank>
                 <Button

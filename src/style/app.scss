@@ -1,3 +1,14 @@
+body {
+  background: #fff!important;
+}
+// icon
+.icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+}
+
 .login, .register {
   overflow-y: hidden;
   .am-list .am-list-item.am-input-item {

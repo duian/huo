@@ -1,5 +1,30 @@
 .login {
   background: #fff;
+  // 1像素
+  .am-list .am-list-item.am-input-item:after {
+    width: 200%;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+  }
+  // icon
+  .icon-mobile {
+    position: absolute;
+    top: 18px;
+    line-height: 56px;
+    width: 12px;
+    height: 21px;
+    background: #fff url(./phone.png) no-repeat;
+    background-size: cover;
+  }
+  .icon-lock {
+    position: absolute;
+    top: 18px;
+    line-height: 56px;
+    width: 14px;
+    height: 21px;
+    background: #fff url(./lock.png) no-repeat;
+    background-size: cover;
+  }
   .logo {
     position: absolute;
     left: 50%;
