@@ -154,7 +154,7 @@ class Person extends Component {
   render() {
     const { driverInfo } = this.state;
     const carDesc = `${driverInfo.carTypeStr}/${driverInfo.carLengthStr}`;
-    const weightDesc = `${driverInfo.weight}吨/${driverInfo.cubic}方/${driverInfo.carAxis}`;
+    const weightDesc = `${driverInfo.weight}吨/${driverInfo.cubic}方/${driverInfo.carAxis}轴`;
     return (
       <div className="person">
         <div className="panel">
