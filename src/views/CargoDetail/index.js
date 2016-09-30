@@ -183,44 +183,46 @@ class CargoDetail extends React.Component {
           </div>
           <div className="trapezoid">{cargoInfo.statusStr}</div>
         </div>
-        <div>
-          <h4 className="title">项目信息</h4>
-        </div>
-        <WingBlank>
-          <Table
-            direction="horizon"
-            columns={columns}
-            dataSource={data}
-          />
-          <Modal
-            transparent
-            onClose={this.handleMessageClose}
-            visible={messageVisible}
-            className="message-modal"
-            style={{
-              width: 'auto',
-              height: 'auto',
-            }}
-            footer={[{ text: '返回', onPress: this.handleMessageClose }]}
-          >
-            <div>提交成功，等待客服联系您...</div>
-          </Modal>
-          <Modal
-            transparent
-            visible={loginVisible}
-            className="login-modal"
-            style={{
-              width: 'auto',
-              height: 'auto',
-            }}
-            footer={[{ text: '确认', onPress: this.handleJumpLogin }]}
+        <div className="cargo-content">
+          <div>
+            <h4 className="title">项目信息</h4>
+          </div>
+          <WingBlank>
+            <Table
+              direction="horizon"
+              columns={columns}
+              dataSource={data}
+            />
+            <Modal
+              transparent
+              onClose={this.handleMessageClose}
+              visible={messageVisible}
+              className="message-modal"
+              style={{
+                width: 'auto',
+                height: 'auto',
+              }}
+              footer={[{ text: '返回', onPress: this.handleMessageClose }]}
             >
-            <div>您还没注册，需要先注册哦</div>
-          </Modal>
-          {
-            offerVisible === true ? this.renderOffer() : null
-          }
-        </WingBlank>
+              <div>提交成功，等待客服联系您...</div>
+            </Modal>
+            <Modal
+              transparent
+              visible={loginVisible}
+              className="login-modal"
+              style={{
+                width: 'auto',
+                height: 'auto',
+              }}
+              footer={[{ text: '确认', onPress: this.handleJumpLogin }]}
+              >
+              <div>您还没注册，需要先注册哦</div>
+            </Modal>
+            {
+              offerVisible === true ? this.renderOffer() : null
+            }
+          </WingBlank>
+        </div>
         { submited === false ? this.renderBtn() : null }
       </div>
     );

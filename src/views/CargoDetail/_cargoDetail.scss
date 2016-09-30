@@ -1,5 +1,6 @@
 .cargo-detail {
-  background: #fff;
+  background: #f9f8f4;
+  padding-bottom: 30px;
   .info {
     position: relative;
     background: #75aade;
@@ -19,14 +20,44 @@
       bottom: 0;
     }
   }
+  .cargo-content {
+    position: relative;
+    background: #fff;
+    margin-top: 15px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    &:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200%;
+      height: 200%;
+      content: " ";
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      border-top: 1px solid #cfcfcf;
+      border-bottom: 1px solid #cfcfcf;
+    }
+  }
   .title {
-    margin-left: 30px;
+    position: relative;
     padding-bottom: 14px;
-    border-bottom: 1px solid #cfcfcf;
     color: #4c4c4c;
-    font-size: 20px;
+    font-size: 18px;
+    margin-top: 0;
     margin-bottom: 18px;
     margin-left: 18px;
+    &:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200%;
+      height: 200%;
+      content: " ";
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      border-bottom: 1px solid #cfcfcf;
+    }
   }
   .am-wingblank.am-wingblank-lg {
     margin-left: 18px;
