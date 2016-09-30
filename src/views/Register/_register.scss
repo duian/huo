@@ -1,5 +1,41 @@
 .register {
   background: #fff;
+  // 1像素
+  .am-list .am-list-item.am-input-item:after {
+    width: 200%;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+  }
+  // icon
+  .icon-mobile {
+    position: absolute;
+    top: 18px;
+    line-height: 56px;
+    width: 12px;
+    height: 21px;
+    background: #fff url(./phone.png) no-repeat;
+    background-size: cover;
+  }
+  .icon-verify {
+    position: absolute;
+    top: 18px;
+    margin-left: -4px;
+    line-height: 56px;
+    width: 18px;
+    height: 21px;
+    background: #fff url(./verify.png) no-repeat;
+    background-size: cover;
+  }
+  .icon-car {
+    position: absolute;
+    top: 18px;
+    margin-left: -2px;
+    line-height: 56px;
+    width: 28px;
+    height: 14px;
+    background: #fff url(./car.png) no-repeat;
+    background-size: cover;
+  }
   .logo {
     position: absolute;
     left: 50%;
@@ -86,6 +122,9 @@
     }
   }
   .verify {
+    position: absolute;
+    top: 13px;
+    right: 0;
     font-size: 12px;
     height: 30px;
     line-height: 30px;

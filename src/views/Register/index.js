@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { createForm } from 'rc-form';
 import _ from 'lodash';
-import { Icon, List, InputItem, Button, Toast, WingBlank, Picker } from 'antd-mobile';
+import { List, InputItem, Button, Toast, WingBlank, Picker } from 'antd-mobile';
 import './_register';
 import { postRequest } from '../../utils/web';
 import params from '../../utils/params';
@@ -94,7 +94,7 @@ class Register extends Component {
                 clear
                 maxLength={11}
               >
-                <Icon type="mobile"/>
+                <span className="icon icon-mobile"/>
               </InputItem>
               <InputItem
                 {...getFieldProps('verify')}
@@ -112,7 +112,7 @@ class Register extends Component {
                   >{verifyText}</Button>}
                 clear
               >
-                <Icon type="link"/>
+                <span className="icon icon-verify"/>
               </InputItem>
               <Picker
                 {...getFieldProps('car')}
@@ -123,7 +123,7 @@ class Register extends Component {
                 data={this.state.data}
                 >
                 <List.Item>
-                  <Icon type="setting"/>
+                  <span className="icon icon-car"/>
                 </List.Item>
               </Picker>
               <WingBlank>
