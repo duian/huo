@@ -14,11 +14,22 @@
     display: -webkit-box;
     display: flex;
     margin-bottom: 18px;
-    border-top: 1px solid #6daadd;
-    border-bottom: 1px solid #6daadd;
+    // border-top: 1px solid #6daadd;
+    // border-bottom: 1px solid #6daadd;
     position: relative;
     height: 76px;
     background: #fff;
+    &:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200%;
+      height: 200%;
+      content: " ";
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      border: 1px solid #6daadd;
+    }
     .panel-info {
       position: relative;
       width: 116px;
@@ -64,16 +75,16 @@
     position: fixed;
     bottom: 24px;
     right: 24px;
-    width: 64px;
-    height: 64px;
-    border-radius: 64px;
+    width: 67px;
+    height: 67px;
+    border-radius: 67px;
     color: #fff;
-    text-align: center;
-    line-height: 64px;
-    font-size: 12px;
-    background: #56d586;
+    // text-align: center;
+    line-height: 67px;
+    background: url(./helper.png) no-repeat;
+    background-size: cover;
     -webkit-backface-visibility: hidden;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     /*--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Most Important*/
   }
 }
