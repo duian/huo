@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListView } from 'antd-mobile';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 import { postRequest } from '../../utils/web';
 import './_myCargo';
 
@@ -40,7 +40,6 @@ class MyCargo extends Component {
   }
 
   requestForCargo(page) {
-
     const uuid = localStorage.getItem('uuid');
     if (uuid === undefined) {
       return;
@@ -69,7 +68,7 @@ class MyCargo extends Component {
 
   render() {
     const { orderList, currPage } = this.state;
-    let index = orderList.length
+    let index = orderList.length;
     let row;
     if (index <= 0) {
       row = () => <div></div>;
@@ -115,7 +114,7 @@ class MyCargo extends Component {
       <ListView
         dataSource={this.state.dataSource}
         renderHeader={() => <span>header</span>}
-        renderFooter={() => <div style={{ padding: 30, textAlign: 'center' }}>
+        renderFooter={() => <div style={{ padding: 30, textAlign: 'center', fontSize: 16 }}>
           {this.state.isLoading ? '加载中...' : '加载完毕'}
         </div>}
         renderRow={row}

@@ -24,7 +24,7 @@ class CargoDetail extends React.Component {
       // 提示信息
       messageVisible: false,
       // 详情
-      offerVisible: false,
+      offerVisible: true,
       cargoInfo: {},
       projectInfo: {},
       loadAddressInfo: {},
@@ -148,8 +148,8 @@ class CargoDetail extends React.Component {
 
 
   // 取消支付
-  cancelPay(){
-    const { id } = this.props.params;
+  cancelPay() {
+    // const { id } = this.props.params;
     const { orderNum } = this.state.cargoInfo;
     const data = {
       orderNum,
@@ -254,11 +254,11 @@ class CargoDetail extends React.Component {
         </div>
         <div className="people-info">
           <div className="people-info-item">
-            <div>装货地址: {loadAddressInfo.address}</div>
+            <div className="load-address">装货地址: {loadAddressInfo.address}</div>
             <a href={`tel:${loadAddressInfo.linkMobile}`} className="people-contact">联系人电话</a>
           </div>
           <div className="people-info-item">
-            <div>卸货地址: {unloadAddressInfo.address}</div>
+            <div className="unload-address">卸货地址: {unloadAddressInfo.address}</div>
             <a href={`tel:${unloadAddressInfo.linkMobile}`} className="people-contact">联系人电话</a>
           </div>
           <Link className="map-icon" to={`/my-cargo/${this.props.params.id}/map`}>

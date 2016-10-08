@@ -9,10 +9,10 @@
   // icon
   .icon-mobile {
     position: absolute;
-    top: 18px;
+    top: 17px;
     line-height: 56px;
-    width: 12px;
-    height: 21px;
+    width: 13px;
+    height: 22px;
     background: #fff url(./phone.png) no-repeat;
     background-size: cover;
   }
@@ -35,13 +35,14 @@
     height: 100px;
     background: #fff;
     margin: 0 auto;
+    margin-top: -20px;
     background: transparent url(./logo.png) no-repeat;
     background-position: center;
     background-size: cover;
   }
   .login-bg {
     position: relative;
-    height: 280px;
+    height: 320px;
     background: #000 url(./login-bg.png) no-repeat;
     background-position: center;
     background-size: cover;

@@ -110,7 +110,7 @@ class Cargo extends Component {
       <ListView
         dataSource={this.state.dataSource}
         renderHeader={() => <span>header</span>}
-        renderFooter={() => <div style={{ padding: 30, textAlign: 'center' }}>
+        renderFooter={() => <div style={{ padding: 20, textAlign: 'center', fontSize: 16 }}>
           {this.state.isLoading ? '加载中...' : '加载完毕'}
         </div>}
         renderRow={row}
