@@ -1,7 +1,6 @@
 import url from './url';
 import request from 'superagent-bluebird-promise';
 
-
 export function postRequest(data, serviceName, success, fail) {
   const uuid = localStorage.getItem('uuid');
   const params = {
@@ -11,6 +10,7 @@ export function postRequest(data, serviceName, success, fail) {
     timestamp: '',
     signatures: '',
   };
+
   return request.post(url.webapp)
   .withCredentials()
   .send(params)

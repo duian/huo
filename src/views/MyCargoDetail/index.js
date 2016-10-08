@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Offer from './Offer';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { WingBlank, Table, Button } from 'antd-mobile';
+import { WingBlank, Table, Button, Toast } from 'antd-mobile';
 import './_mycargoDetail';
 import { postRequest } from '../../utils/web';
 import mapIcon from './map-icon.png';
@@ -142,7 +142,7 @@ class CargoDetail extends React.Component {
       this.setState({ payInfo: returnData.result });
       this.handleOfferOpen();
     }, (returnData) => {
-      console.log('err', returnData);
+      Toast.info(returnData.msg);
     });
   }
 
@@ -161,13 +161,8 @@ class CargoDetail extends React.Component {
 
    // 确认支付
   postPayInfo() {
-    // const uuid = localStorage.getItem('uuid');
-    const { orderNum } = this.state.cargoInfo;
-    // const re = new RegExp('[&,?]code=([^//&]*)', 'i');
-    // const weChatCode = re.exec(location.href)[1];
-    const code = '123456';
+    const { orderNum } = this.state.cargoInfo;    
     const data = {
-      code,
       orderNum,
       url: location.href,
       type: 'ORDER_PAY_POST',
@@ -212,7 +207,8 @@ class CargoDetail extends React.Component {
           success: (res) => {
             WeixinJSBridge.log(res.err_msg);
             if (!res.err_msg) {
-              location.href = `mobile/pay/wechat_pay_ok.htm?orderId=${outTradeNo}`;
+              this.handleOfferClose();
+              this.context.router.push('/my-cargo');
             }
           },
           cancel: (res)=>{
@@ -230,8 +226,6 @@ class CargoDetail extends React.Component {
         jsApiList: ['chooseWXPay'],
         success: () => null,
       });
-      this.handleOfferClose();
-      this.context.router.push(`/my-cargo/${this.props.params.id}/success`);
     }, (returnData)=>{
 
     });

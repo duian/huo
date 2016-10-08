@@ -106,7 +106,7 @@ class CarTag extends Component {
         carTools,
         type: 'DRIVER_CAR_TOOLS',
       };
-     const service = 'SERVICE_DRIVER';
+    const service = 'SERVICE_DRIVER';
     this.httpRequest(data,service,(returnData)=>{
       const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
       driverInfo.carTools = carTools;
