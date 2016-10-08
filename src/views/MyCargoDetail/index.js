@@ -24,7 +24,7 @@ class CargoDetail extends React.Component {
       // 提示信息
       messageVisible: false,
       // 详情
-      offerVisible: true,
+      offerVisible: false,
       cargoInfo: {},
       projectInfo: {},
       loadAddressInfo: {},
@@ -161,7 +161,7 @@ class CargoDetail extends React.Component {
 
    // 确认支付
   postPayInfo() {
-    const { orderNum } = this.state.cargoInfo;    
+    const { orderNum } = this.state.cargoInfo;
     const data = {
       orderNum,
       url: location.href,
