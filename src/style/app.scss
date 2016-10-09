@@ -113,6 +113,8 @@ body {
   .am-list-item .am-list-line .am-list-extra {
     font-size: 15px;
     color: #898989;
+    text-align: left;
+    text-indent: 15px;
   }
   .am-list-item .am-list-line .am-list-arrow {
     width: 15px;
@@ -177,7 +179,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000px;
+  z-index: 1000;
   background: #f9f8f4;
 }
 
