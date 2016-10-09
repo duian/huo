@@ -147,3 +147,13 @@
     }
   }
 }
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+  .register {
+    .register-bg {
+      height: 240px;
+    }
+  }
+}

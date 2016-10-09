@@ -1,4 +1,12 @@
 .person {
+  // input
+  input {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    height: 30px;
+    line-height: 30px;
+  }
   .am-list .am-list-body {
     &:after {
       border-bottom: none;
@@ -17,16 +25,6 @@
     background: #000 url(./person-img.png) no-repeat;
     background-size: cover;
   }
-  // .am-list-body {
-  //   & > a {
-  //     position: relative;
-  //     display: block;
-  //     background: #000;
-  //   }
-  // }
-  // .am-list-item {
-  //   background: transparentx;
-  // }
   .panel-media {
     padding-right: 15px;
     img {
@@ -84,16 +82,6 @@
       border-radius: 50px;
     }
   }
-  // .tag-container{
-  //   display: flex;
-  //   padding-top: 0.18rem;
-  //   flex-direction: row;
-  //   flex-wrap: wrap;
-  // }
-  // .tag-container > div {
-  //   margin-left: 0.18rem;
-  //   margin-bottom: 0.18rem;
-  // }
   .tag-container {
     width: 100%;
     background: #fff;
@@ -177,6 +165,12 @@
   .submit-btn {
     margin-top: 30px;
     border-radius: 25px;
+    background: #f9f8f4;
+    // color:
+    &:after {
+      border: 2px solid #ffaa26;
+      border-radius: 50px;
+    }
   }
 
   // 编辑车牌
@@ -254,6 +248,4 @@
     height: 38px;
     border: none;
   }
-
-
 }
