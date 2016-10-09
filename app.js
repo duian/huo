@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors);
 
 app.post('/', (req, res) => {
-  request.post('http://106.75.13.249:8078/wechat/webapp.htm')
+  request.post('http://www.huo68.com/wechat/webapp.htm')
   .withCredentials()
   .send(req.body)
   .then((data) => {

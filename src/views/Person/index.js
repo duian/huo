@@ -75,7 +75,6 @@ class Person extends Component {
       if (returnData.result.imageName) {
         this.getImage(returnData.result.imageName);
       }
-
       this.setState({
         driverInfo: returnData.result,
       });
@@ -120,6 +119,7 @@ class Person extends Component {
   }
 
   componentDidMount() {
+    // document.title('个人中心');
     this.prepareData();
     localStorage.setItem('driverInfo', JSON.stringify({}));
   }

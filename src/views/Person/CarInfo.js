@@ -59,11 +59,11 @@ class CarInfo extends Component {
     const isOther = cType === 100;
 
     if (car === undefined || car.length === 0) {
-      Toast.fail('请选择车长车型');
+      Toast.info('请选择车长车型');
       return;
     }
     if (uuid === undefined) {
-      Toast.fail('请登陆');
+      Toast.info('请登陆');
       return;
     }
 
@@ -90,6 +90,10 @@ class CarInfo extends Component {
         Toast.fail(returnData.msg);
 
     });
+  }
+
+  componentDidMount(){
+    // document.title('车型车长');
   }
 }
 

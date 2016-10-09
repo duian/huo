@@ -37,6 +37,7 @@ class Cargo extends Component {
   }
 
   componentDidMount() {
+    // document.title('货源列表');
     this.requestForCargo(this.state.currPage);
   }
 

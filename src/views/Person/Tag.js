@@ -96,8 +96,8 @@ class CarTag extends Component {
     if (uuid === undefined) {
       return;
     }
-    if (carTools === undefined) {
-      Toast.fail('请选择附属物');
+    if (carTools === '') {
+      Toast.info('请选择附属物');
       return;
     }
 
@@ -115,6 +115,10 @@ class CarTag extends Component {
     },(returnData)=>{
         Toast.fail(returnData.msg);
     });
+  }
+
+  componentDidMount(){
+    // document.title('车辆附属物');
   }
 }
 

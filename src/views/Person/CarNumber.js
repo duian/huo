@@ -7,9 +7,13 @@ import { postRequest } from '../../utils/web';
 class CarNumber extends Component {
   constructor(props) {
     super(props);
-    const { carNum } = this.props.driverInfo;
+    let { carNum } = this.props.driverInfo;
+    let tag = '川';
+    if(carNum != ''){
+      tag = carNum ? carNum.slice(0, 1) : '川';
+    }
     this.state = {
-      tag: carNum ? carNum.slice(0, 1) : '',
+      tag: tag,
       tags: params.tags,
     };
     this.showTags = this.showTags.bind(this);
@@ -53,26 +57,34 @@ class CarNumber extends Component {
     Popup.show(
       <div className="edit-tag">
         <Flex wrap="wrap" className="flex-button-container">
-          {tags.map((tag, index) => <Button
+          {tags.map((tag, index) => {<Button
             className={tag.active || ''}
             onClick={this.handleToggle.bind(this, tag, index)} key={index}>{tag.name}
-          </Button>)}
+          </Button>})}
         </Flex>
         <Button
           className="select-tag"
           onClick={this.handleSelectTag}>完成</Button>
       </div>
-    , { animationType: 'slide-up' });
+    , { animationType: 'slide-up' }
+    );
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ tag: nextProps.driverInfo.carNum.slice(0, 1) });
+    const { carNum } = nextProps.driverInfo;
+    console.log(nextProps.driverInfo);
+    if (carNum != ''){
+      this.setState({ tag: carNum.slice(0, 1) });
+    }
   }
 
   render() {
     const { tag } = this.state;
     const { carNum } = this.props.driverInfo;
-    const initCarNum = carNum ? carNum.slice(1) : '';
+    let initCarNum = '';
+    if (carNum != ''){
+      initCarNum = carNum ? carNum.slice(1) : ''
+    }
     const { getFieldProps } = this.props.form;
     return (
       <div className="page edit-number">
@@ -107,12 +119,13 @@ class CarNumber extends Component {
     const carNum = this.props.form.getFieldProps('carNum').value;
     const { tag } = this.state;
     const _carNum = `${tag}${carNum}`;
-    if (_carNum === undefined) {
-      Toast.fail('请填写车牌号');
+    console.log(_carNum);
+    if (carNum === '') {
+      Toast.info('请填写车牌号');
       return;
     }
     if (uuid === undefined) {
-      Toast.fail('请登陆');
+      Toast.info('请登陆');
       return;
     }
     const data = {
@@ -132,6 +145,9 @@ class CarNumber extends Component {
         Toast.fail(returnData.msg);
 
     });
+  }
+  componentDidMount(){
+    // document.title('车牌号');
   }
 }
 const _CarNumber = createForm()(CarNumber);

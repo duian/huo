@@ -69,6 +69,10 @@ class Register extends Component {
       Toast.fail(returnData.msg);
     });
   }
+  componentDidMount(){
+    // document.title = '注册';
+  }
+
   render() {
     const { verifyButtonState, countDown, loading } = this.state;
     const { getFieldProps } = this.props.form;
@@ -119,7 +123,7 @@ class Register extends Component {
                 className="reg-picker"
                 labelNumber={2}
                 cols={2}
-                extra="请选择车长车型"
+                extra="请选择车型车长"
                 data={this.state.data}
                 >
                 <List.Item className="car">

@@ -39,11 +39,12 @@ class Name extends Component {
   handleSubmit() {
     const uuid = localStorage.getItem('uuid');
     const name = this.props.form.getFieldProps('name').value;
-    if (name === undefined) {
-      Toast.fail('请填写姓名');
+    if (name === '') {
+      Toast.info('请填写姓名');
       return;
     }
     if (uuid === undefined) {
+      Toast.info('您尚未登录');
       return;
     }
     const data = {
@@ -60,6 +61,10 @@ class Name extends Component {
     }, (returnData) => {
       console.log('err', returnData);
     });
+  }
+
+  componentDidMount(){
+    // document.title('姓名');
   }
 }
 

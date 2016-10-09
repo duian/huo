@@ -52,6 +52,10 @@ class Login extends Component {
       });
     });
   }
+  
+  componentDidMount(){
+    // document.title('登陆');
+  }
 
   render() {
     const { loading } = this.state;

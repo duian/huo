@@ -74,12 +74,12 @@ class Weight extends Component {
         return;
       }
 
-      if (values.weight === undefined) {
-        Toast.fail('请填写吨位');
+      if (values.weight === '') {
+        Toast.info('请填写吨位');
         return;
       }
-      if (values.cubic === undefined) {
-        Toast.fail('请填写吨位');
+      if (values.cubic === '') {
+        Toast.info('请填写方量');
         return;
       }
       if (uuid === undefined) {
@@ -103,6 +103,10 @@ class Weight extends Component {
         Toast.fail(returnData.msg);
       });
     });
+  }
+
+  componentDidMount(){
+    // document.title('车辆载重');
   }
 }
 

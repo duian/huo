@@ -230,6 +230,7 @@ class CargoDetail extends React.Component {
   }
 
   componentDidMount() {
+    // document.title('货源详情');
     this.prepareData();
   }
 

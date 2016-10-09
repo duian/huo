@@ -31,6 +31,10 @@ class Img extends React.Component {
   handleUpload() {
     const uuid = localStorage.getItem('uuid');
     const { files } = this.state;
+    if (files[0] === undefined){
+      Toast.info('请选择证件照片');
+      return;
+    }
     const data = {
       data: {
         type: 'IMG_UP',
@@ -40,23 +44,20 @@ class Img extends React.Component {
       timestamp: '',
       signatures: '',
     };
-    // const { onClose } = this.props;
-    Toast.success('上传');
     request.post(url.webapp)
     .withCredentials()
     .field('file', files[0])
     .field('json', JSON.stringify(data))
-    // .send(data)
     .then(res => {
       const returnData = JSON.parse(res.text);
       if (returnData.success) {
+        console.log(returnData.result);
         this.updateDriverCerityfy(returnData.result);
       } else {
         Toast.fail(returnData.msg);
       }
     });
   }
-
 
   updateDriverCerityfy(imagePath) {
     const uuid = localStorage.getItem('uuid');
@@ -79,6 +80,7 @@ class Img extends React.Component {
       if (resultData.success) {
         const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
         driverInfo.imagePath = imagePath;
+        Toast.success(resultData.msg);
         localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
         this.context.router.push('/person');
       } else {
@@ -120,6 +122,10 @@ class Img extends React.Component {
         </div>
       </div>
     );
+  }
+
+  componentDidMount(){
+    // document.title('证件信息');
   }
 }
 
