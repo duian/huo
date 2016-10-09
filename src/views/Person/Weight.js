@@ -35,7 +35,7 @@ class Weight extends Component {
         </Picker>
         <InputItem
           {...getFieldProps('weight', {
-            initialValue: weight,
+            initialValue: weight===0?'':weight,
           })}
           clear
           placeholder="请输入吨位"
@@ -44,7 +44,7 @@ class Weight extends Component {
           />
         <InputItem
           {...getFieldProps('cubic', {
-            initialValue: cubic,
+            initialValue: cubic===0?'':cubic,
           })}
           clear
           placeholder="请输入方量"
