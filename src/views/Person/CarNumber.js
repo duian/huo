@@ -3,6 +3,7 @@ import { InputItem, WingBlank, Toast, Button, Popup, Flex } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import params from '../../utils/params';
 import { postRequest } from '../../utils/web';
+import _ from 'lodash';
 
 class CarNumber extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class CarNumber extends Component {
       }
       return tag;
     });
-    const $buttons = Array.from(document.querySelectorAll('.flex-button-container button'));
+    const $buttons = [].slice.call(document.querySelectorAll('.flex-button-container button'));
     $buttons.forEach((button) => {
       button.classList.remove('active');
     });
@@ -47,7 +48,7 @@ class CarNumber extends Component {
 
   handleSelectTag() {
     const { tags } = this.state;
-    const _tag = tags.find((tag) => tag.active);
+    const _tag = _.find(tags, (tag) => tag.active);
     this.setState({ tag: _tag.name });
     Popup.hide();
   }
