@@ -40,24 +40,24 @@ class Offer extends React.Component {
     const { cargoInfo, form } = this.props;
     const values = form.getFieldsValue();
 
-    const  data = {
-        cargoId: `${cargoInfo.cargoId}`,
-        quantity: `${values.quantity}`,
-        unitPrice: `${values.unitPrice}`,
-        unitType: `${unitType}`,
-        type: 'CARGO_APPLY',
-      };
+    const data = {
+      cargoId: `${cargoInfo.cargoId}`,
+      quantity: `${values.quantity}`,
+      unitPrice: `${values.unitPrice}`,
+      unitType: `${unitType}`,
+      type: 'CARGO_APPLY',
+    };
     const serviceName = 'SERVICE_CARGO';
 
-    this.httpRequest(data,serviceName,(returnData)=>{
-        Toast.success(returnData.msg);
-        this.props.onClose();
-        this.props.onHidden();
-    },(returnData)=>{
-        Toast.fail(returnData.msg);
-        this.setState({
-          isRequesting: false,
-        });
+    this.httpRequest(data, serviceName, (returnData) => {
+      Toast.success(returnData.msg);
+      this.props.onClose();
+      this.props.onHidden();
+    }, (returnData) => {
+      Toast.fail(returnData.msg);
+      this.setState({
+        isRequesting: false,
+      });
     });
   }
 
@@ -74,7 +74,7 @@ class Offer extends React.Component {
     });
   }
 
-  handleQuantityChange(val){
+  handleQuantityChange() {
     const { form } = this.props;
     return form.setFieldsValue({
       totalPrice: '',
@@ -121,7 +121,7 @@ class Offer extends React.Component {
                 <InputItem
                   {...getFieldProps('quantity', {
                     initialValue: '',
-                    onChange: this.handleQuantityChange
+                    onChange: this.handleQuantityChange,
                   })}
                   type="number"
                   extra={unitTypeStr}
