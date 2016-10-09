@@ -53,7 +53,8 @@
   }
   .register-bg {
     position: relative;
-    height: 320px;
+    // height: 320px;
+    height: 50vh;
     background: #000 url(./login-bg.png) no-repeat;
     background-position: center;
     background-size: cover;
@@ -144,16 +145,6 @@
     background-color: rgba(0, 0, 0, 0);
     &:after {
       border: 1px solid #ffa416!important;
-    }
-  }
-}
-
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 568px) {
-  .register {
-    .register-bg {
-      height: 240px;
     }
   }
 }
