@@ -3,7 +3,7 @@ import { Toast, Button } from 'antd-mobile';
 import url from '../../utils/url';
 import request from 'superagent-bluebird-promise';
 import Dropzone from 'react-dropzone';
-import png from './upload-demo.png';
+import png from './upload-demo.jpg';
 import demo from './default.png';
 
 
@@ -103,7 +103,7 @@ class Img extends React.Component {
     return (
       <div className="page edit-img">
         <div className="cargo-upload">
-          <div className="text">请上传您的行驶证和驾驶证合照</div>
+          <div className="text">请上传您的行驶证和驾驶证合照(如下图示例)</div>
           <img src={png} className="upload-demo"/>
           <Button inline onClick={this.openDrop} className="upload-btn">上传</Button>
           <Dropzone

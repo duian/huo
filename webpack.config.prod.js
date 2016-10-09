@@ -64,6 +64,6 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['', '.web.js', '.js', '.jsx', '.json', '.css', '.scss'],
+    extensions: ['', '.web.js', '.js', '.jsx', '.json', '.css', '.less', '.scss'],
   },
 };
