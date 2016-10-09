@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Tag, Toast, WingBlank, Button } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { postRequest } from '../../utils/web';
+import _ from 'lodash';
 
 const initTags = [
   { name: '车内无杂物' },
@@ -22,7 +23,7 @@ class CarTag extends Component {
     if (carTools) {
       tags = carTools.split(';');
       tags = initTags.map(tag => {
-        if (tags.includes(tag.name)) {
+        if (_.includes(tags, tag.name)) {
           tag.selected = true;
         }
         return tag;
@@ -37,10 +38,10 @@ class CarTag extends Component {
   }
 
   handleSelectTag(_tag) {
-    console.log('tag click');
+    // console.log('tag click');
     const { tags } = this.state;
-    tags.find(tag => tag.name === _tag.name).selected = !_tag.selected;
-    console.log('tags', tags);
+    _.find(tags, tag => tag.name === _tag.name).selected = !_tag.selected;
+    // console.log('tags', tags);
     this.setState({ tags });
   }
 
@@ -50,7 +51,7 @@ class CarTag extends Component {
     if (carTools) {
       tags = carTools.split(',');
       tags = initTags.map(tag => {
-        if (tags.includes(tag.name)) {
+        if (_.includes(tags, tag.name)) {
           tag.selected = true;
         }
         return tag;
@@ -92,7 +93,7 @@ class CarTag extends Component {
     const carTools = tags
     .filter(tag => tag.selected)
     .map(tag => tag.name).join(';') || '';
-    
+
     if (uuid === undefined) {
       return;
     }
@@ -103,21 +104,21 @@ class CarTag extends Component {
 
     console.log(carTools);
     const data = {
-        carTools,
-        type: 'DRIVER_CAR_TOOLS',
-      };
+      carTools,
+      type: 'DRIVER_CAR_TOOLS',
+    };
     const service = 'SERVICE_DRIVER';
-    this.httpRequest(data,service,(returnData)=>{
+    this.httpRequest(data, service, () => {
       const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
       driverInfo.carTools = carTools;
       localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
       this.context.router.push('/person');
-    },(returnData)=>{
-        Toast.fail(returnData.msg);
+    }, (returnData) => {
+      Toast.fail(returnData.msg);
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // document.title('车辆附属物');
   }
 }
