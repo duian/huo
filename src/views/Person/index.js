@@ -5,6 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import request from 'superagent-bluebird-promise';
 import url from '../../utils/url';
 import { postRequest } from '../../utils/web';
+import _ from 'lodash';
 import './_person';
 
 class Person extends Component {
@@ -114,7 +115,7 @@ class Person extends Component {
     const { driverInfo } = this.state;
     const _driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
     this.setState({
-      driverInfo: Object.assign(driverInfo, _driverInfo),
+      driverInfo: _.assign(driverInfo, _driverInfo),
     });
   }
 
