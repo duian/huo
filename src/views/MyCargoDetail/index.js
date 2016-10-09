@@ -126,7 +126,9 @@ class CargoDetail extends React.Component {
         loadAddressInfo: returnData.result.loadAddressInfo,
         unloadAddressInfo: returnData.result.unloadAddressInfo,
       });
-    }, () => (null));
+    }, (returnData) => {
+      
+    });
   }
 
   // 获取支付信息

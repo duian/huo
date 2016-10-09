@@ -25,7 +25,7 @@ class CargoDetail extends React.Component {
       offerVisible: false,
       cargoInfo: {},
       projectInfo: {},
-      submited: false,
+      submited: true,
 
       // 总里程数
       distance: null,
@@ -276,6 +276,7 @@ class CargoDetail extends React.Component {
       this.setState({
         cargoInfo: returnData.result,
         projectInfo: returnData.result.projectInfo,
+        submited: returnData.result.status < 100 ? false:true,
       });
     }, (returnData) => {
       console.log(returnData);
