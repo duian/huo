@@ -13,7 +13,7 @@
   "author": "xkiwi <zhouqiao0418@gmail.com> (http://www.github.com/duian)",
   "license": "ISC",
   "devDependencies": {
-    "antd-mobile": "^0.8.1",
+    "antd-mobile": "0.8.1",
     "autoprefixer": "^6.3.3",
     "babel-core": "^6.7.2",
     "babel-eslint": "^6.1.2",

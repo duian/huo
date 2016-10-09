@@ -3,7 +3,7 @@ import { Toast, Button } from 'antd-mobile';
 import url from '../../utils/url';
 import request from 'superagent-bluebird-promise';
 import Dropzone from 'react-dropzone';
-import png from './upload-demo.png';
+import png from './upload-demo.jpg';
 import demo from './default.png';
 
 
