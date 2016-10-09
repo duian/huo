@@ -7,13 +7,13 @@ import { postRequest } from '../../utils/web';
 class CarNumber extends Component {
   constructor(props) {
     super(props);
-    let { carNum } = this.props.driverInfo;
+    const { carNum } = this.props.driverInfo;
     let tag = '川';
-    if(carNum != ''){
+    if (carNum !== '') {
       tag = carNum ? carNum.slice(0, 1) : '川';
     }
     this.state = {
-      tag: tag,
+      tag,
       tags: params.tags,
     };
     this.showTags = this.showTags.bind(this);
@@ -57,10 +57,10 @@ class CarNumber extends Component {
     Popup.show(
       <div className="edit-tag">
         <Flex wrap="wrap" className="flex-button-container">
-          {tags.map((tag, index) => {<Button
+          {tags.map((tag, index) => (<Button
             className={tag.active || ''}
             onClick={this.handleToggle.bind(this, tag, index)} key={index}>{tag.name}
-          </Button>})}
+          </Button>))}
         </Flex>
         <Button
           className="select-tag"
@@ -73,7 +73,7 @@ class CarNumber extends Component {
   componentWillReceiveProps(nextProps) {
     const { carNum } = nextProps.driverInfo;
     console.log(nextProps.driverInfo);
-    if (carNum != ''){
+    if (carNum !== '') {
       this.setState({ tag: carNum.slice(0, 1) });
     }
   }
@@ -82,8 +82,8 @@ class CarNumber extends Component {
     const { tag } = this.state;
     const { carNum } = this.props.driverInfo;
     let initCarNum = '';
-    if (carNum != ''){
-      initCarNum = carNum ? carNum.slice(1) : ''
+    if (carNum !== '') {
+      initCarNum = carNum ? carNum.slice(1) : '';
     }
     const { getFieldProps } = this.props.form;
     return (
@@ -129,24 +129,22 @@ class CarNumber extends Component {
       return;
     }
     const data = {
-        carNum: _carNum,
-        type: '	DRIVER_CAR_NUM',
-      };
+      carNum: _carNum,
+      type: '	DRIVER_CAR_NUM',
+    };
     const service = 'SERVICE_DRIVER';
 
-    this.httpRequest(data,service,(returnData)=>{
-      
+    this.httpRequest(data, service, () => {
       const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
       driverInfo.carNum = _carNum;
       localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
       this.context.router.push('/person');
-
-    },(returnData)=>{
-        Toast.fail(returnData.msg);
-
+    }, (returnData) => {
+      Toast.fail(returnData.msg);
     });
   }
-  componentDidMount(){
+
+  componentDidMount() {
     // document.title('车牌号');
   }
 }
