@@ -82,6 +82,11 @@ class Weight extends Component {
         Toast.info('请填写方量');
         return;
       }
+      if (values.carAxis == 0){
+        Toast.info('请选择轴数');
+        return;
+      }
+
       if (uuid === undefined) {
         return;
       }
