@@ -22,19 +22,34 @@ class Register extends Component {
   }
 
   handleSubmit() {
-    this.setState({ loading: true });
+    
     const carProp = this.props.form.getFieldProps('car').value;
     const weChatCode = localStorage.getItem('weChatCode');
-    const fromto = this.props.location.search.substring(6);
-
+    const fromto = this.props.location.search.substring(6);    
     if (weChatCode === null) {
       Toast.info('请在微信中浏览器中打开', 1);
       return;
     }
+    const username = this.props.form.getFieldProps('username').value;
+    const verify = this.props.form.getFieldProps('verify').value;
 
+    if (username === undefined || username.length != 11){
+      Toast.info('请正确填写手机号码');
+      return;
+    }
+    if (verify === undefined || verify.length != 6){
+      Toast.info('请正确填写验证码');
+      return;
+    }
+    if (carProp===undefined){
+      Toast.info('请选择车型车长');
+      return;
+    }
+
+    this.setState({ loading: true });
     const data = {
-      mobile: this.props.form.getFieldProps('username').value.toString(),
-      code: this.props.form.getFieldProps('verify').value.toString(),
+      mobile: username.toString(),
+      code: verify.toString(),
       carLength: carProp[0].toString(),
       carType: carProp[1].toString(),
       type: 'DRIVER_REGISTER',
@@ -48,6 +63,8 @@ class Register extends Component {
       this.context.router.push(fromto);
     }, (returnData) => {
       Toast.fail(returnData.msg);
+      this.setState({ loading: false });
+
     });
   }
 
@@ -70,7 +87,7 @@ class Register extends Component {
     });
   }
   componentDidMount(){
-    // document.title = '注册';
+    document.title = '注册';
   }
 
   render() {

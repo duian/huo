@@ -36,6 +36,17 @@ class Login extends Component {
         console.log('Errors in form!!!');
         return;
       }
+
+      if (values.username === undefined || values.username.length != 11){
+        Toast.info('请正确填写手机号码');
+        return;
+      }
+      if (values.password === undefined){
+        Toast.info('请输入密码');
+        return;
+      }
+
+
       const data = {
         mobile: values.username,
         passWord: values.password,
