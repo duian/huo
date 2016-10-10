@@ -25,11 +25,14 @@
   .mycargo-desc {
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
+    margin-right: 0;
     width: 100%;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 0;
-    padding: 10px;
+    line-height: 40px;
     background: #dad7d0;
   }
   .order {
