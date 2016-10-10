@@ -134,7 +134,6 @@ class CarNumber extends Component {
     const carNum = this.props.form.getFieldProps('carNum').value;
     const { tag } = this.state;
     const _carNum = `${tag}${carNum}`;
-    console.log(_carNum);
     if (carNum === '') {
       Toast.info('请填写车牌号');
       return;

@@ -128,6 +128,7 @@ class CargoDetail extends React.Component {
     return <Button className="apply-for" onClick={this.handleApply}>申请</Button>;
   }
   render() {
+    document.title = '货源详情';
     const {
       messageVisible,
       loginVisible,
@@ -230,7 +231,6 @@ class CargoDetail extends React.Component {
   }
 
   componentDidMount() {
-    document.title = '货源详情';
     this.prepareData();
   }
 

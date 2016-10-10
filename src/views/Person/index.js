@@ -111,6 +111,7 @@ class Person extends Component {
   }
 
   componentWillReceiveProps() {
+    document.title = '个人中心';
     const { driverInfo } = this.state;
     const _driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
     this.setState({
@@ -119,7 +120,6 @@ class Person extends Component {
   }
 
   componentDidMount() {
-    document.title = '个人中心';
     this.prepareData();
     localStorage.setItem('driverInfo', JSON.stringify({}));
   }

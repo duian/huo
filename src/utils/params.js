@@ -35,6 +35,9 @@ const carAxis = [
   { label: '3轴', value: 3 },
   { label: '4轴', value: 4 },
   { label: '5轴', value: 5 },
+  { label: '6轴', value: 6 },
+  { label: '7轴', value: 7 },
+  { label: '8轴', value: 8 },
 ];
 
 const tags = [

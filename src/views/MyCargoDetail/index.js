@@ -78,8 +78,10 @@ class CargoDetail extends React.Component {
   }
 
   componentDidMount() {
-    document.title = '订单详情';
     this.prepareData();
+    setTimeout(() => {
+      this.prepareData();
+    }, 30000);
   }
 
   // 获取货源信息
@@ -271,6 +273,7 @@ class CargoDetail extends React.Component {
     return <p className="mycargo-desc">处理中，请注意接听400客服电话</p>;
   }
   render() {
+    document.title = '我的货运-订单详情';
     const {
       offerVisible,
       cargoInfo,

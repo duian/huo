@@ -67,7 +67,7 @@ class CarInfo extends Component {
       Toast.info('请登陆');
       return;
     }
-
+    
     if (cType === 100) {
       cType = 0;
     }
@@ -99,7 +99,6 @@ class CarInfo extends Component {
 CarInfo.contextTypes = {
   router: React.PropTypes.object,
 };
-
 
 const _CarInfo = createForm()(CarInfo);
 export default _CarInfo;

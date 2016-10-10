@@ -138,4 +138,8 @@ class Img extends React.Component {
   }
 }
 
+Img.contextTypes = {
+  router: React.PropTypes.object,
+};
+
 export default Img;

@@ -53,6 +53,7 @@ class Offer extends React.Component {
       Toast.success(returnData.msg);
       this.props.onClose();
       this.props.onHidden();
+      this.context.router.push(`/my-cargo/${returnData.result}`);
     }, (returnData) => {
       Toast.fail(returnData.msg);
       this.setState({
@@ -155,5 +156,10 @@ class Offer extends React.Component {
     );
   }
 }
+
+Offer.contextTypes = {
+  router: React.PropTypes.object,
+};
 const _Offer = createForm()(Offer);
+
 export default _Offer;
