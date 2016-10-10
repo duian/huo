@@ -79,9 +79,13 @@ class CargoDetail extends React.Component {
 
   componentDidMount() {
     this.prepareData();
-    setTimeout(() => {
+    this.updateData = setInterval(() => {
       this.prepareData();
     }, 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateData); 
   }
 
   // 获取货源信息
