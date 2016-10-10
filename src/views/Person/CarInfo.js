@@ -3,6 +3,7 @@ import { WingBlank, Toast, Button, Picker, List } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import params from '../../utils/params';
 import { postRequest } from '../../utils/web';
+import _ from 'lodash';
 
 const _carType = params.carType;
 const _carLength = params.carLength;
@@ -71,27 +72,26 @@ class CarInfo extends Component {
       cType = 0;
     }
     const data = {
-        carType: `${cType}`,
-        carLength: `${cLength}`,
-        type: 'DRIVER_CAR',
+      carType: `${cType}`,
+      carLength: `${cLength}`,
+      type: 'DRIVER_CAR',
     };
-    const  service = 'SERVICE_DRIVER';
-    this.httpRequest(data,service,(returnData)=>{
+    const service = 'SERVICE_DRIVER';
+    this.httpRequest(data, service, () => {
       const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
       driverInfo.carLeng = cLength;
-      driverInfo.carLengthStr = _carLength.find(c => c.value === cLength).label;
+      driverInfo.carLengthStr = _.find(_carLength, c => c.value === cLength).label;
       driverInfo.carType = isOther ? 100 : cType;
-      driverInfo.carTypeStr = _carType.find(c => c.value === (isOther ? 100 : cType)).label;
+      driverInfo.carTypeStr = _.find(_carType, c => c.value === (isOther ? 100 : cType)).label;
       localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
 
       this.context.router.push('/person');
-    },(returnData)=>{
-        Toast.fail(returnData.msg);
-
+    }, (returnData) => {
+      Toast.fail(returnData.msg);
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.title = '车型车长';
   }
 }
