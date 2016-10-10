@@ -79,10 +79,14 @@ class CarNumber extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { carNum } = nextProps.driverInfo;
-    console.log(nextProps.driverInfo);
+    // console.log(nextProps.driverInfo);
     if (carNum !== '') {
       this.setState({ tag: carNum.slice(0, 1) });
     }
+  }
+
+  componentWillUnmount() {
+    Popup.hide();
   }
 
   render() {
