@@ -87,7 +87,7 @@ class CargoDetail extends React.Component {
   componentWillUnmount() {
     clearInterval(this.updateData); 
   }
-
+  
   // 获取货源信息
   prepareData() {
     // const uuid = localStorage.getItem('uuid');

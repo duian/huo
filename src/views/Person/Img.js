@@ -15,7 +15,7 @@ class Img extends React.Component {
       files: [],
       animating: false,
     };
-
+    
     this.openDrop = this.openDrop.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -82,7 +82,7 @@ class Img extends React.Component {
       const resultData = JSON.parse(res.text);
       if (resultData.success) {
         const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
-        driverInfo.imagePath = imagePath;
+        driverInfo.imageName = imagePath;
         Toast.success(resultData.msg);
         localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
         this.context.router.push('/person');
