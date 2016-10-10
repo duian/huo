@@ -218,3 +218,9 @@ body {
 .am-modal-mask {
   background-color: rgba(0, 0, 0, 0.7)!important;
 }
+
+.am-picker-popup-body {
+  .am-picker-picker-item {
+    direction: ltr;
+  }
+}
