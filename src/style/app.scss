@@ -181,6 +181,20 @@ body {
   height: 100%;
   z-index: 900;
   background: #f9f8f4;
+
+  .am-activity-indicator.am-activity-indicator-toast {
+    left: 0!important;
+  }
+  .am-activity-indicator-content {
+    padding: 16px;
+  }
+  .am-activity-indicator-spinner-lg {
+    width: 32px;
+    height: 32px;
+  }
+  .am-activity-indicator.am-activity-indicator-toast .am-activity-indicator-toast {
+    font-size: 16px;
+  }
 }
 
 // 清楚表单字段数据

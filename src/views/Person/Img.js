@@ -1,5 +1,5 @@
 import React from 'react';
-import { Toast, Button } from 'antd-mobile';
+import { Toast, Button, ActivityIndicator } from 'antd-mobile';
 import url from '../../utils/url';
 import request from 'superagent-bluebird-promise';
 import Dropzone from 'react-dropzone';
@@ -13,8 +13,9 @@ class Img extends React.Component {
 
     this.state = {
       files: [],
+      animating: false,
     };
-    
+
     this.openDrop = this.openDrop.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -31,10 +32,11 @@ class Img extends React.Component {
   handleUpload() {
     const uuid = localStorage.getItem('uuid');
     const { files } = this.state;
-    if (files[0] === undefined){
+    if (files[0] === undefined) {
       Toast.info('请选择证件照片');
       return;
     }
+    this.setState({ animating: true });
     const data = {
       data: {
         type: 'IMG_UP',
@@ -51,11 +53,12 @@ class Img extends React.Component {
     .then(res => {
       const returnData = JSON.parse(res.text);
       if (returnData.success) {
-        console.log(returnData.result);
+        // console.log(returnData.result);
         this.updateDriverCerityfy(returnData.result);
       } else {
         Toast.fail(returnData.msg);
       }
+      this.setState({ animating: false });
     });
   }
 
@@ -98,7 +101,7 @@ class Img extends React.Component {
       );
     }
     return (
-      <img className="upload-img default" src={certifyImg||demo}/>
+      <img className="upload-img default" src={certifyImg || demo}/>
     );
   }
 
@@ -120,12 +123,17 @@ class Img extends React.Component {
             </div>
           </Dropzone>
           <Button inline onClick={this.handleUpload} className="submit-btn">提交</Button>
+          <ActivityIndicator
+            toast
+            text="正在上传证件"
+            animating={this.state.animating}
+          />
         </div>
       </div>
     );
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.title = '证件信息';
   }
 }
