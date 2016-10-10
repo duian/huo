@@ -4,7 +4,7 @@ export default {
   // webapp: 'http://majorszhang.imwork.net/wechat/webapp.htm',
   // webapp: 'http://localhost:8080/wechat/webapp.htm',
   // webapp: 'http://localhost:8080/wechat/webapp.htm',
-  webapp: 'http://192.168.1.113:7011',
+  webapp: 'http://192.168.21.163:7011',
   mapToPOI: ' http://restapi.amap.com/v3/geocode/geo',
   distance: 'http://restapi.amap.com/v3/distance',
   mapKey: '4932838f85177d06a6b9ba2c2e9b7964',

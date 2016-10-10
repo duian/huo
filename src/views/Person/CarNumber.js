@@ -141,7 +141,7 @@ class CarNumber extends Component {
     }
     const data = {
       carNum: _carNum,
-      type: '	DRIVER_CAR_NUM',
+      type: 'DRIVER_CAR_NUM',
     };
     const service = 'SERVICE_DRIVER';
 
@@ -156,8 +156,11 @@ class CarNumber extends Component {
   }
 
   componentDidMount() {
-    // document.title('车牌号');
+    document.title = '车牌号';
   }
 }
+CarNumber.contextTypes = {
+  router: React.PropTypes.object,
+};
 const _CarNumber = createForm()(CarNumber);
 export default _CarNumber;

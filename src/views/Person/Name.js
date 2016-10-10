@@ -64,7 +64,7 @@ class Name extends Component {
   }
 
   componentDidMount(){
-    // document.title('姓名');
+    document.title = '姓名';
   }
 }
 

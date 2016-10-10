@@ -54,9 +54,9 @@ class Person extends Component {
 
   cloneChildren() {
     const path = this.props.location.pathname;
-    const { driverInfo } = this.state;
+    const { driverInfo, certifyImg } = this.state;
     if (this.props.children) {
-      return React.cloneElement(this.props.children, { key: path, driverInfo });
+      return React.cloneElement(this.props.children, { key: path, driverInfo ,certifyImg });
     }
     return null;
   }
@@ -119,7 +119,7 @@ class Person extends Component {
   }
 
   componentDidMount() {
-    // document.title('个人中心');
+    document.title = '个人中心';
     this.prepareData();
     localStorage.setItem('driverInfo', JSON.stringify({}));
   }

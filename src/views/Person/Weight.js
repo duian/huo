@@ -111,7 +111,7 @@ class Weight extends Component {
   }
 
   componentDidMount(){
-    // document.title('车辆载重');
+    document.title = '车辆载重';
   }
 }
 
