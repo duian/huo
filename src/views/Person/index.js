@@ -41,7 +41,7 @@ class Person extends Component {
     }
     return true;
   }
-  
+
   modifyCertifyImg(e) {
     const { driverInfo } = this.state;
     if (driverInfo.certifyStatus === 10) {

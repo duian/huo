@@ -9,13 +9,19 @@ class CarNumber extends Component {
   constructor(props) {
     super(props);
     const { carNum } = this.props.driverInfo;
-    let tag = '川';
+    let tag;
     if (carNum !== '') {
       tag = carNum ? carNum.slice(0, 1) : '川';
     }
+    const tags = params.tags.map((t) => {
+      if (t.name === tag) {
+        t.active = 'active';
+      }
+      return t;
+    });
     this.state = {
       tag,
-      tags: params.tags,
+      tags,
     };
     this.showTags = this.showTags.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
