@@ -56,12 +56,14 @@ class CarNumber extends Component {
     const { tags } = this.state;
     const _tag = _.find(tags, (tag) => tag.active);
     this.setState({ tag: _tag.name });
-    Popup.hide();
+    // Popup.hide();
+    this.popup.hide();
   }
 
   showTags() {
     const { tags } = this.state;
-    Popup.show(
+    this.popup = Popup.newInstance();
+    this.popup.show(
       <div className="edit-tag">
         <Flex wrap="wrap" className="flex-button-container">
           {tags.map((tag, index) => (<Button
@@ -86,7 +88,9 @@ class CarNumber extends Component {
   }
 
   componentWillUnmount() {
-    Popup.hide();
+    if (this.popup) {
+      this.popup.hide();
+    }
   }
 
   render() {
