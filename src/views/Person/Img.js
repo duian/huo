@@ -90,6 +90,7 @@ class Img extends React.Component {
   }
 
   renderImg() {
+    const certifyImg = this.props.certifyImg;
     const { files } = this.state;
     if (files.length) {
       return (
@@ -97,7 +98,7 @@ class Img extends React.Component {
       );
     }
     return (
-      <img className="upload-img default" src={demo}/>
+      <img className="upload-img default" src={certifyImg||demo}/>
     );
   }
 
@@ -125,7 +126,7 @@ class Img extends React.Component {
   }
 
   componentDidMount(){
-    // document.title('证件信息');
+    document.title = '证件信息';
   }
 }
 

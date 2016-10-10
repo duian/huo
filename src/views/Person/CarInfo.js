@@ -85,7 +85,6 @@ class CarInfo extends Component {
       localStorage.setItem('driverInfo', JSON.stringify(driverInfo));
 
       this.context.router.push('/person');
-
     },(returnData)=>{
         Toast.fail(returnData.msg);
 
@@ -93,7 +92,7 @@ class CarInfo extends Component {
   }
 
   componentDidMount(){
-    // document.title('车型车长');
+    document.title = '车型车长';
   }
 }
 

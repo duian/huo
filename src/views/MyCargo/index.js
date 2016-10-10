@@ -36,7 +36,7 @@ class MyCargo extends Component {
   }
 
   componentDidMount() {
-    // document.title('我的货运');
+    document.title = '我的货运';
     this.requestForCargo(this.state.currPage);
   }
 

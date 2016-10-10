@@ -68,7 +68,7 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    // document.title('装卸货路线');
+    document.title = '装卸货路线';
     const { cargoInfo } = this.props;
     if (cargoInfo) {
       // arrivalCityStr,
