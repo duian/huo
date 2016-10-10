@@ -46,17 +46,21 @@ class Register extends Component {
       return;
     }
 
+    const cType = carProp[0];
+    const cLength = carProp[1];
+    const isOtherType = cType === 100;
+    const isOtherLength = cLength === 100;
+
     this.setState({ loading: true });
     const data = {
       mobile: username.toString(),
       code: verify.toString(),
-      carLength: carProp[0].toString(),
-      carType: carProp[1].toString(),
+      carLength: isOtherLength?'0':cLength.toString(),
+      carType: isOtherType?'0':cType.toString(),
       type: 'DRIVER_REGISTER',
       weChatCode,
     };
     const service = 'SERVICE_REGISTER';
-
     this.httpRequest(data, service, (returnData) => {
       localStorage.setItem('uuid', returnData.result.uuid);
       this.setState({ loading: false });
