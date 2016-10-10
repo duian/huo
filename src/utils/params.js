@@ -1,5 +1,4 @@
 
-// 其他值应该为0，但是组件本身bug，不支持这种表达方式，所以特意将其他的值设置为100
 const carLength = [
   { label: '22米', value: 10 },
   { label: '17.5米', value: 3 },
@@ -11,7 +10,7 @@ const carLength = [
   { label: '6.8米', value: 6 },
   { label: '5.2米', value: 5 },
   { label: '4.2米', value: 4 },
-  { label: '其他', value: 100 },
+  { label: '其他', value: 0 },
 ];
 
 // 其他值应该为0，但是组件本身bug，不支持这种表达方式，所以特意将其他的值设置为100

@@ -56,9 +56,8 @@ class CarInfo extends Component {
     const uuid = localStorage.getItem('uuid');
     const car = this.props.form.getFieldProps('car').value;
     let cType = car[0];
-    let cLength = car[1];
+    const cLength = car[1];
     const isOther = cType === 100;
-    const isOtherLength = cLength === 100;
 
     if (car === undefined || car.length === 0) {
       Toast.info('请选择车长车型');
@@ -71,9 +70,6 @@ class CarInfo extends Component {
     
     if (cType === 100) {
       cType = 0;
-    }
-    if (cLength === 100){
-      cLength = 0;
     }
     const data = {
       carType: `${cType}`,
