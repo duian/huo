@@ -42,6 +42,8 @@ class CargoDetail extends React.Component {
     this.renderBtn = this.renderBtn.bind(this);
     // 地址
     this.renderAddress = this.renderAddress.bind(this);
+    // status 小于99提示
+    this.renderDesc = this.renderDesc.bind(this);
     // 获取支付信息
     this.getPayInfo = this.getPayInfo.bind(this);
     // 提交支付信息
@@ -128,7 +130,7 @@ class CargoDetail extends React.Component {
         unloadAddressInfo: returnData.result.unloadAddressInfo,
       });
     }, (returnData) => {
-      
+      console.log(returnData.msg);
     });
   }
 
@@ -181,7 +183,6 @@ class CargoDetail extends React.Component {
         packageName,
         signType,
         paySign,
-        outTradeNo,
       } = returnData.result;
       wx.config({
         // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -266,6 +267,9 @@ class CargoDetail extends React.Component {
     );
   }
 
+  renderDesc() {
+    return <p className="mycargo-desc">处理中，请注意接听400客服电话</p>;
+  }
   render() {
     const {
       offerVisible,
@@ -348,7 +352,6 @@ class CargoDetail extends React.Component {
     } else {
       data = simpleProjectInfo;
     }
-
     return (
       <div className="mycargo-detail">
         <div className="order">订单编号：{cargoInfo.orderNum}</div>
@@ -393,8 +396,9 @@ class CargoDetail extends React.Component {
             />
           </WingBlank>
         </div>
-        { Number.parseInt(cargoInfo.status, 10) > 99 ? this.renderAddress() : null}
-        { Number.parseInt(cargoInfo.status, 10) === 99 ? this.renderBtn() : null}
+        { parseInt(cargoInfo.status, 10) > 99 ? this.renderAddress() : null}
+        { parseInt(cargoInfo.status, 10) === 99 ? this.renderBtn() : null}
+        { parseInt(cargoInfo.status, 10) < 99 ? this.renderDesc() : null}
         <ReactCSSTransitionGroup transitionName="pageSlider"
           transitionEnterTimeout={600} transitionLeaveTimeout={600}>
           {this.cloneChildren()}
