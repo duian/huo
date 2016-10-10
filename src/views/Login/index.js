@@ -65,7 +65,7 @@ class Login extends Component {
   }
   
   componentDidMount(){
-    // document.title('登陆');
+    document.title = '登录';
   }
 
   render() {

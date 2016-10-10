@@ -76,7 +76,7 @@ class CargoDetail extends React.Component {
   }
 
   componentDidMount() {
-    // document.title('订单详情');
+    document.title = '订单详情';
     this.prepareData();
   }
 

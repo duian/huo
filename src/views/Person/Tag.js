@@ -119,7 +119,7 @@ class CarTag extends Component {
   }
 
   componentDidMount() {
-    // document.title('车辆附属物');
+    document.title = '车辆附属物';
   }
 }
 
