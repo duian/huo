@@ -111,7 +111,6 @@ class Person extends Component {
   }
 
   componentWillReceiveProps() {
-    document.title = '个人中心';
     const { driverInfo } = this.state;
     const _driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
     this.setState({
@@ -153,6 +152,7 @@ class Person extends Component {
   }
 
   render() {
+    document.title = '个人中心';
     const { driverInfo } = this.state;
     const carDesc = `${driverInfo.carTypeStr}/${driverInfo.carLengthStr}`;
     const weightDesc = `${driverInfo.weight}吨/${driverInfo.cubic}方/${driverInfo.carAxis}轴`;
