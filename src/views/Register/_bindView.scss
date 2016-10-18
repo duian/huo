@@ -1,0 +1,68 @@
+.bindView{
+
+    .bind-modal {
+        padding: 25px 25px;
+    }
+    
+    .verify {
+        position: center;
+        right: 10px;
+        font-size: 12px;
+        height: 40px;
+        line-height: 30px;
+        color: #ffa416;
+        border-color: #ffa416!important;
+        &:after {
+            border: 1px solid #ffa416!important;
+        }
+    }
+    .bind-bg {
+        position: relative;
+        padding: 25px 25px;
+        background-position: center;
+        background-size: cover;
+
+    }
+    .bind-input {
+        position: relative;
+        border-left: 1px solid #ff9305;
+        border-right: 1px solid #ff9305;
+        margin: 8px;
+        .one {
+            border-top: 1px solid #ff9305;
+            border-bottom: 1px solid #ff9305;
+        }
+        .two {
+             border-bottom: 1px solid #ff9305;
+        }
+    }
+
+    .cancel-btn {
+        width: 90px;
+        height: 40px;
+        line-height: 40px;
+        color: #aaa8a5;
+        font-size: 16px;
+        padding: 0;
+        margin-bottom: 16px;
+        &:after {
+        border: 1px solid #aaa8a5;
+        border-radius: 36px;
+        }
+        margin-right: 50px;
+    }
+
+    .confirm-btn {
+        width: 90px;
+        height: 40px;
+        line-height: 40px;
+        color: #ffaa26;
+        font-size: 16px;
+        padding: 0;
+        margin-bottom: 16px;
+        &:after {
+        border: 1px solid #ffaa26;
+        border-radius: 36px;
+        }
+    }
+}

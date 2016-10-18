@@ -112,7 +112,6 @@ class Register extends Component {
             <List.Body>
               <InputItem
                 {...getFieldProps('username')}
-                className="form-mobile"
                 placeholder="请输入手机号"
                 labelNumber={2}
                 type="number"
@@ -123,7 +122,6 @@ class Register extends Component {
               </InputItem>
               <InputItem
                 {...getFieldProps('verify')}
-                className="form-verify"
                 placeholder="请输入验证码"
                 type="number"
                 maxLength={6}

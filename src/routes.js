@@ -48,7 +48,7 @@ class Routes extends React.Component {
     if (weChatCodeArr !== null) {
       this.requestForOpenId(weChatCodeArr[1]);
     }
-    this.requestForOpenId('weChatCode-123455');
+    // this.requestForOpenId('weChatCode-123455');
     return (
       <Router history={hashHistory}>
         <Route path="login" component={Login} onEnter={redirectToCargo}/>
@@ -76,7 +76,6 @@ class Routes extends React.Component {
   }
 
  requestForOpenId(weChatCode){
-
     const data = {
       weChatCode: weChatCode,
       type: 'WECHAT_OPEN_ID',
