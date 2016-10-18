@@ -24,9 +24,9 @@ class Register extends Component {
   handleSubmit() {
     
     const carProp = this.props.form.getFieldProps('car').value;
-    const weChatCode = localStorage.getItem('weChatCode');
+    const openId = localStorage.getItem('openId');
     const fromto = this.props.location.search.substring(6);    
-    if (weChatCode === null) {
+    if (openId === null) {
       Toast.info('请在微信中浏览器中打开', 1);
       return;
     }
@@ -58,7 +58,7 @@ class Register extends Component {
       carLength: isOtherLength?'0':cLength.toString(),
       carType: isOtherType?'0':cType.toString(),
       type: 'DRIVER_REGISTER',
-      weChatCode,
+      openId,
     };
     const service = 'SERVICE_REGISTER';
     this.httpRequest(data, service, (returnData) => {

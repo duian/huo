@@ -16,6 +16,7 @@ import MyCargo from './views/MyCargo';
 import MyCargoDetail from './views/MyCargoDetail';
 import MyCargoSuccess from './views/MyCargoDetail/OfferSuccess';
 import MyCargoMap from './views/MyCargoDetail/Map';
+import { postRequest } from './utils/web';
 
 
 function redirectToLogin(nextState, replace) {
@@ -38,16 +39,16 @@ class Routes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.httpRequest = postRequest.bind(this);
   }
 
   render() {
     const re = new RegExp('[&,?]code=([^//&]*)', 'i');
     const weChatCodeArr = re.exec(location.href);
-    let weChatCode;
     if (weChatCodeArr !== null) {
-      weChatCode = weChatCodeArr[1];
-      localStorage.setItem('weChatCode', weChatCode);
+      this.requestForOpenId(weChatCodeArr[1]);
     }
+    this.requestForOpenId('weChatCode-123455');
     return (
       <Router history={hashHistory}>
         <Route path="login" component={Login} onEnter={redirectToCargo}/>
@@ -73,6 +74,20 @@ class Routes extends React.Component {
       </Router>
     );
   }
+
+ requestForOpenId(weChatCode){
+
+    const data = {
+      weChatCode: weChatCode,
+      type: 'WECHAT_OPEN_ID',
+    };
+    const service = 'SERVICE_REGISTER';
+    this.httpRequest(data, service, (returnData) => {
+      localStorage.setItem('openId',returnData.result);
+    }, (returnData) => {
+    });
+ }
+
 }
 
 export default Routes;

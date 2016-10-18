@@ -23,10 +23,10 @@ class Login extends Component {
     const { form } = this.props;
     this.setState({ loading: true });
     console.log(this.props.location);
-    const weChatCode = localStorage.getItem('weChatCode');
+    const openId = localStorage.getItem('openId');
     const fromto = this.props.location.search.substring(6);
 
-    if (weChatCode === null) {
+    if (openId === null) {
       Toast.info('请在微信中浏览器中打开', 1);
       return;
     }
@@ -46,11 +46,10 @@ class Login extends Component {
         return;
       }
 
-
       const data = {
         mobile: values.username,
         passWord: values.password,
-        weChatCode,
+        openId,
       };
       const serviceName = 'SERVICE_LOGIN';
       this.httpRequest(data, serviceName, (returnData) => {
