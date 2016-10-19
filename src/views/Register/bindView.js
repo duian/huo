@@ -1,10 +1,10 @@
 import React from 'react';
 import { createForm } from 'rc-form';
 import { InputItem, Button, Toast, WingBlank, Modal } from 'antd-mobile';
-import request from 'superagent-bluebird-promise';
 import _ from 'lodash';
+import edit from './edit.png';
 import './_bindView';
-import url from '../../utils/url';
+import { postRequest } from '../../utils/web';
 
 class BindView extends React.Component {
 
@@ -16,15 +16,17 @@ class BindView extends React.Component {
     };
 
     this.sendVerify = this.sendVerify.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleBindCancel = this.handleBindCancel.bind(this);
+    this.handleBindSucc = this.handleBindSucc.bind(this);
+    this.httpRequest = postRequest.bind(this);
     this.handleBind = this.handleBind.bind(this);
-    this.handleClose = this.handleClose.bind(this);
 
   }
   
   render(){
-    
     const { verifyButtonState, countDown } = this.state;
-    const verifyText = verifyButtonState ? `倒计时${countDown}` : '获取验证码';
+    const verifyText = verifyButtonState ? `${countDown}秒` : '验证码';
     const { getFieldProps } = this.props.form;
     const visible = true;
     return(
@@ -47,8 +49,11 @@ class BindView extends React.Component {
                   className="one"
                   labelNumber={2}
                   type="number"
-                  clear
                   maxLength={11}
+                  extra={<img src={edit} 
+                    className="bindView edit"
+                  />}
+                  clear
                 >
                 </InputItem>
                 <InputItem
@@ -69,7 +74,7 @@ class BindView extends React.Component {
                 </InputItem>
           </div>
           <div>
-            <Button inline className="bindView cancel-btn" onClick={this.handleClose}>取消</Button>
+            <Button inline className="bindView cancel-btn" onClick={this.handleCancel}>取消</Button>
             <Button inline className="bindView confirm-btn" onClick={this.handleBind}>绑定</Button>
           </div>
         </div>
@@ -78,31 +83,83 @@ class BindView extends React.Component {
   }
 
   sendVerify() {
+
+    const mobile = this.props.form.getFieldProps('mobile').value;
+    if ( mobile === undefined){
+      Toast.info('请填写手机号码');
+      return;
+    }
     this.setState({ verifyButtonState: true, countDown: 60 });
     const text = setInterval(() => this.setState({ countDown: this.state.countDown - 1 }), 1000);
     setTimeout(() => {
-      this.setState({ verifyButtonState: false, countDown: 60 });
+       this.setState({ verifyButtonState: false, countDown: 60 });
       clearInterval(text);
     }, 60000);
+
     const data = {
-      mobile: this.props.form.getFieldProps('mobile').value,
-      type: 'DRIVER_REGISTER',
+      mobile ,
+      type: 'DRIVER_BINDING',
     };
     const service = 'SERVICE_IDENTIFY_CODE';
     this.httpRequest(data, service, (returnData) => {
       Toast.success(returnData.msg);
     }, (returnData) => {
       Toast.fail(returnData.msg);
+      this.setState({ verifyButtonState: false, countDown: 60 });
+      clearInterval(text);
     });
   }
 
-  handleClose() {
+  // 取消绑定
+  handleCancel() {
+    this.handleBindCancel();
+  }
+
+  // 用户绑定
+  handleBind() {
+    const mobile = this.props.form.getFieldProps('mobile').value;
+    const code = this.props.form.getFieldProps('verify').value;
+    const openId = localStorage.getItem('openId');
+    console.log(mobile);
+    if (mobile === undefined || mobile == ''){
+      Toast.info('请填写手机号码')
+      return;
+    }
+    if (code === undefined || mobile == ''){
+      Toast.info('请填写验证码');
+      return;
+    }
+    if (openId == null){
+      Toast.info('请在微信浏览器打开');
+      return;
+    }
+
+    const data = {
+      mobile: `${mobile}`,
+      code:`${this.props.form.getFieldProps('verify').value}`,
+      openId,
+      type: 'DRIVER_BINDING',
+    };
+    const service = 'SERVICE_REGISTER';
+    this.httpRequest(data,service,(returnData)=>{
+      // 请求成功
+      localStorage.setItem('uuid',returnData.result.uuid);
+      this.handleBindSucc(returnData.msg);
+    },(returnData)=>{
+      // 请求失败
+      Toast.info(returnData.msg);
+    });
+  }
+
+  handleBindCancel(){
     const { onClose } = this.props;
     onClose();
   }
-
-  handleBind() {
-
+  
+  handleBindSucc(msg){
+    const { onSuccess } = this.props;
+    Toast.info(msg,1.5);
+    onSuccess();
   }
 
 }

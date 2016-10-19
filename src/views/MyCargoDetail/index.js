@@ -31,6 +31,7 @@ class CargoDetail extends React.Component {
       unloadAddressInfo: {},
       payInfo: {},
       distance: null,
+      payBtnVisible: true,
     };
 
     this.cloneChildren = this.cloneChildren.bind(this);
@@ -172,6 +173,17 @@ class CargoDetail extends React.Component {
 
    // 确认支付
   postPayInfo() {
+    this.handleOfferClose();
+    const { id } = this.props.params;
+    sessionStorage.setItem('orderId',id)
+    const {cargoInfo} = this.state;
+    cargoInfo.statusStr = '运输中';
+    this.setState({
+      cargoInfo,
+      payBtnVisible: false,
+    });
+    this.context.router.push(`/my-cargo/${id}/pay-success/${this.state.payInfo.actualFee}`);
+    return;
     const { orderNum } = this.state.cargoInfo;
     const data = {
       orderNum,
@@ -217,8 +229,16 @@ class CargoDetail extends React.Component {
           success: (res) => {
             WeixinJSBridge.log(res.err_msg);
             if (!res.err_msg) {
+              // 支付成功
               this.handleOfferClose();
-              this.context.router.push('/my-cargo');
+              const {cargoInfo} = this.state;
+              cargoInfo.statusStr = '运输中';
+              this.setState({
+                cargoInfo,
+                payBtnVisible: false,
+              });
+              sessionStorage.setItem('orderId',id)
+              this.context.router.push(`/my-cargo/${this.props.params.id}/pay-success/${this.state.payInfo.actualFee}`);
             }
           },
           cancel: (res)=>{
@@ -284,7 +304,13 @@ class CargoDetail extends React.Component {
       projectInfo,
       payInfo,
       distance,
+      payBtnVisible,
     } = this.state;
+    let visible = false;
+    if (parseInt(cargoInfo.status, 10) === 99 && payBtnVisible){
+       visible = true;
+    }
+
     const simpleProjectInfo = [{
       title: '司机人数',
       name: projectInfo.driverNum || 1,
@@ -404,7 +430,7 @@ class CargoDetail extends React.Component {
           </WingBlank>
         </div>
         { parseInt(cargoInfo.status, 10) > 99 ? this.renderAddress() : null}
-        { parseInt(cargoInfo.status, 10) === 99 ? this.renderBtn() : null}
+        { visible ? this.renderBtn() : null}
         { parseInt(cargoInfo.status, 10) < 99 ? this.renderDesc() : null}
         <ReactCSSTransitionGroup transitionName="pageSlider"
           transitionEnterTimeout={600} transitionLeaveTimeout={600}>

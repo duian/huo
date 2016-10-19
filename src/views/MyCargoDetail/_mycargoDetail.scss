@@ -196,6 +196,8 @@
   .offer-success {
     .mycargo-offer {
       background: #fff;
+      font-size: 16pt;
+      left: 24px;
     }
     .confirm-btn {
       display: block;
@@ -285,18 +287,33 @@
 }
 .mycargo-offer {
   min-width: 220px;
-  padding: 18px 20px;
+  margin-top: 24px;
+  border-top: 1px solid #8a8a8a;
+  border-bottom: 1px solid #8a8a8a;
   .price {
     color: #fd6a12;
     font-weight: bold;
+  }
+  .divideLine {
+    height: 1px;
+    margin-left: 20px;
+    background-color:#8a8a8a; 
+  }
+  .nextStep {
+    height: 70px;
+    text-align: center;
+    margin-top: 60px;
+    color: #8a8a8a;
   }
   .divider {
     display: inline-block;
     width: 10px;
   }
   .text {
+    margin-top: 30px;
     color: #8a8a8a;
-    line-height: 24px;
+    padding-left: 24px;
+    height: 60px;    
     text-align: left;
   }
   .offer {
@@ -348,14 +365,14 @@
   }
 
   .confirm-btn {
-    width: 90px;
-    height: 40px;
+    width: 200px;
+    height: 50px;
     line-height: 40px;
     color: #ffaa26;
-    font-size: 16px;
+    font-size: 18px;
     padding: 0;
     margin-top: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     &:after {
       border: 1px solid #ffaa26;
       border-radius: 36px;
@@ -386,3 +403,20 @@
     }
   }
 }
+
+
+ .global .am-modal-body{
+    font-size: 16px;
+
+ }
+
+.am-modal-button-group-h .am-modal-button{
+  font-size: 16pt;
+  height: 60px;
+  line-height: 60px;
+}
+
+.am-modal-button-group-h .am-modal-button:first-child{
+  color:#8a8a8a;
+}
+  

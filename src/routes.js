@@ -14,25 +14,26 @@ import Cargo from './views/Cargo';
 import CargoDetail from './views/CargoDetail';
 import MyCargo from './views/MyCargo';
 import MyCargoDetail from './views/MyCargoDetail';
-import MyCargoSuccess from './views/MyCargoDetail/OfferSuccess';
+import OfferSuccess from './views/MyCargoDetail/OfferSuccess';
 import MyCargoMap from './views/MyCargoDetail/Map';
+import Upload from './views/MyCargoDetail/Upload';
 import { postRequest } from './utils/web';
 
 
 function redirectToLogin(nextState, replace) {
-  if (localStorage.getItem('uuid') === null) {
-    replace(`/login?from=${nextState.location.pathname.substring(1)}`);
-  }
+  // if (localStorage.getItem('uuid') === null) {
+  //   replace(`/login?from=${nextState.location.pathname.substring(1)}`);
+  // }
 }
 
 function redirectToCargo(nextState, replace) {
-  if (localStorage.getItem('uuid') !== null) {
-    replace('/cargo');
-  } else {
-    if (nextState.location.search.indexOf('?from=') === -1) {
-      replace(`${nextState.location.pathname}?from=cargo`);
-    }
-  }
+  // if (localStorage.getItem('uuid') !== null) {
+  //   replace('/cargo');
+  // } else {
+  //   if (nextState.location.search.indexOf('?from=') === -1) {
+  //     replace(`${nextState.location.pathname}?from=cargo`);
+  //   }
+  // }
 }
 
 class Routes extends React.Component {
@@ -62,12 +63,13 @@ class Routes extends React.Component {
             <Route path="car-weight" component={EditWeight}/>
             <Route path="car-tag" component={EditTag}/>
             <Route path="car-img" component={EditImg}/>
+            <Route path="upload" component={Upload}/>
           </Route>
           <Route path="cargo" component={Cargo}/>
           <Route path="cargo/:id" component={CargoDetail}/>
           <Route path="my-cargo" component={MyCargo} onEnter={redirectToLogin}/>
           <Route path="my-cargo/:id" component={MyCargoDetail} onEnter={redirectToLogin}>
-            <Route path="success" component={MyCargoSuccess}/>
+            <Route path="pay-success/:actualFee" component={OfferSuccess}/>
             <Route path="map" component={MyCargoMap}/>
           </Route>
         </Route>

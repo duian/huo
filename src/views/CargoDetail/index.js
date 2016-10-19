@@ -1,10 +1,10 @@
 import React from 'react';
-import Offer from './Offer';
-import { WingBlank, Table, Button, Modal } from 'antd-mobile';
+import { WingBlank, Table, Button, Modal, ActivityIndicator, Toast } from 'antd-mobile';
 import './_cargoDetail';
 import { postRequest } from '../../utils/web';
 import request from 'superagent-bluebird-promise';
 import url from '../../utils/url';
+import BindView from './../Register/BindView';
 
 const columns = [
   { title: '标题', dataIndex: 'title', key: 'title' },
@@ -19,67 +19,53 @@ class CargoDetail extends React.Component {
       // 提示信息
       messageVisible: false,
       // 跳转登录
-      loginVisible: false,
+      bindVisible: false,
       // 详情
-      offerVisible: false,
       cargoInfo: {},
       projectInfo: {},
       submited: true,
+      
+      isRequesting: false,
 
       // 总里程数
       distance: null,
     };
 
     this.handleApply = this.handleApply.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleMessageOpen = this.handleMessageOpen.bind(this);
     this.handleMessageClose = this.handleMessageClose.bind(this);
-
-    this.handleOfferOpen = this.handleOfferOpen.bind(this);
-    this.handleOfferClose = this.handleOfferClose.bind(this);
-    this.handleLoginOpen = this.handleLoginOpen.bind(this);
-    this.handleJumpLogin = this.handleJumpLogin.bind(this);
-
-    this.renderOffer = this.renderOffer.bind(this);
+    this.prepareData = this.prepareData.bind(this);
+    this.handleBindOpen = this.handleBindOpen.bind(this);
+    this.renderBindView = this.renderBindView.bind(this);
     this.renderBtn = this.renderBtn.bind(this);
+    this.handleBindClose = this.handleBindClose.bind(this);
 
-    this.handleHiddenBtn = this.handleHiddenBtn.bind(this);
+    this.handleOfferSucc = this.handleOfferSucc.bind(this);
+    this.handleOfferRequest = this.handleOfferRequest.bind(this);
     this.httpRequest = postRequest.bind(this);
   }
 
-  handleHiddenBtn() {
-    this.setState({ submited: true });
+  handleOfferSucc() {
+    this.setState({ 
+        submited: true,
+        isRequesting: false,
+      });
   }
 
   handleApply() {
     const uuid = localStorage.getItem('uuid');
-    // 未登录
+    // 未绑定，弹出绑定页面
     if (uuid === undefined || uuid === null) {
-      return this.setState({ loginVisible: true });
+      return this.setState({ bindVisible: true });
     }
-    // 已登录未上传证件
-    return this.setState({ offerVisible: true });
+    // 已绑定，直接发送申请货源请求
+    this.handleOfferRequest();
+    return;
   }
 
-  handleSubmit() {
-    console.log('hello');
-  }
   handleMessageOpen() {
     this.setState({
       messageVisible: true,
-    });
-  }
-
-  // 报价弹出层
-  handleOfferOpen() {
-    this.setState({
-      offerVisible: true,
-    });
-  }
-
-  handleOfferClose() {
-    this.setState({
-      offerVisible: false,
     });
   }
 
@@ -90,50 +76,31 @@ class CargoDetail extends React.Component {
     });
   }
 
-  handleLoginOpen() {
-    this.setState({
-      messageVisible: false,
-    });
-  }
-
   // 注册提示弹出层
-  handleLoginOpen() {
+  handleBindOpen() {
     this.setState({
-      loginVisible: true,
+      bindVisible: true,
     });
   }
 
-  handleJumpLogin() {
-    this.context.router.push(`/register?from=cargo/${this.props.params.id}`);
+  handleBindClose(){
+    this.setState({
+      bindVisible:false,
+    });
   }
 
-  handleOfferClose() {
-    this.setState({ offerVisible: false });
-  }
-
-  renderOffer() {
-    const { offerVisible, cargoInfo } = this.state;
-    return (
-      <Offer
-        onHidden={this.handleHiddenBtn}
-        visible={offerVisible}
-        onClose={this.handleOfferClose}
-        cargoInfo={cargoInfo}
-      />
-    );
-  }
 
   renderBtn() {
-    return <Button className="apply-for" onClick={this.handleApply}>申请</Button>;
+    return <Button className="apply-for" onClick={this.handleApply}>订货</Button>;
   }
   render() {
     document.title = '货源详情';
     const {
       messageVisible,
-      loginVisible,
-      offerVisible,
+      bindVisible,
       submited,
       distance,
+      isRequesting,
     } = this.state;
     const { cargoInfo, projectInfo } = this.state;
     // const { projectInfo } = this.state;
@@ -207,25 +174,28 @@ class CargoDetail extends React.Component {
             >
               <div>提交成功，等待客服联系您...</div>
             </Modal>
-            <Modal
-              transparent
-              visible={loginVisible}
-              className="login-modal"
-              style={{
-                width: 'auto',
-                height: 'auto',
-              }}
-              footer={[{ text: '确认', onPress: this.handleJumpLogin }]}
-              >
-              <div>您还没注册，需要先注册哦</div>
-            </Modal>
             {
-              offerVisible === true ? this.renderOffer() : null
+              bindVisible == true ? this.renderBindView() : null
             }
           </WingBlank>
+          <ActivityIndicator
+            toast
+            text="订货中..."
+            animating={isRequesting}
+          />
+
         </div>
         { submited === false ? this.renderBtn() : null }
       </div>
+    );
+  }
+
+  renderBindView(){
+    return(
+      <BindView
+        onSuccess = {this.handleBindClose}
+        onClose = {this.handleBindClose}
+      />
     );
   }
 
@@ -282,6 +252,36 @@ class CargoDetail extends React.Component {
       console.log(returnData);
     });
   }
+
+  handleOfferRequest() {
+    const uuid = localStorage.getItem('uuid');
+    if (uuid === undefined || this.state.isRequesting) {
+      return;
+    }
+    this.setState({
+      isRequesting: true,
+    });
+
+    const { cargoInfo } = this.state;
+
+    const data = {
+      cargoId: `${cargoInfo.cargoId}`,
+      type: 'CARGO_APPLY',
+    };
+    const serviceName = 'SERVICE_CARGO';
+
+    this.httpRequest(data, serviceName, (returnData) => {
+      Toast.success(returnData.msg);
+      this.handleOfferSucc();
+      this.context.router.push(`/my-cargo/${returnData.result}`);
+    }, (returnData) => {
+      Toast.fail(returnData.msg);
+      this.setState({
+        isRequesting: false,
+      });
+    });
+  }
+
 }
 
 CargoDetail.contextTypes = {

@@ -6,12 +6,14 @@ import BindView from './views/Register/bindView';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    const uuid = localStorage.getItem('uuid');
+    const bindViewVisiable = uuid == null;
     this.state = {
-      bindViewVisiable:true,
+      bindViewVisiable,
     };
     this.renderBindView = this.renderBindView.bind(this);
     this.handleBindClose = this.handleBindClose.bind(this);
-    console.log(this);
   }
   
   render() {
@@ -23,9 +25,8 @@ class App extends React.Component {
       </div>
     );
   }
-
+  
   handleBindClose(){
-    console.log(this);
     this.setState({
       bindViewVisiable:false,
     });
@@ -35,7 +36,7 @@ class App extends React.Component {
 
     return(
       <BindView
-        onSuccess = {this.handleHiddenBtn}
+        onSuccess = {this.handleBindClose}
         onClose = {this.handleBindClose}
       />
     );
