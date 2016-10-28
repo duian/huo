@@ -1,5 +1,5 @@
 import React from 'react';
-import { WingBlank, Table, Button, Modal, ActivityIndicator, Toast } from 'antd-mobile';
+import { WingBlank, Table, Button, Modal, Toast } from 'antd-mobile';
 import './_cargoDetail';
 import { postRequest } from '../../utils/web';
 import request from 'superagent-bluebird-promise';
@@ -25,8 +25,6 @@ class CargoDetail extends React.Component {
       projectInfo: {},
       submited: true,
       
-      isRequesting: false,
-
       // 总里程数
       distance: null,
     };
@@ -41,14 +39,12 @@ class CargoDetail extends React.Component {
     this.handleBindClose = this.handleBindClose.bind(this);
 
     this.handleOfferSucc = this.handleOfferSucc.bind(this);
-    this.handleOfferRequest = this.handleOfferRequest.bind(this);
     this.httpRequest = postRequest.bind(this);
   }
 
   handleOfferSucc() {
     this.setState({ 
         submited: true,
-        isRequesting: false,
       });
   }
 
@@ -58,9 +54,8 @@ class CargoDetail extends React.Component {
     if (uuid === undefined || uuid === null) {
       return this.setState({ bindVisible: true });
     }
-    // 已绑定，直接发送申请货源请求
-    this.handleOfferRequest();
-    return;
+    // 已绑定，直接拨打电话
+    window.location.href = `tel:${this.state.cargoInfo.linkMobile}`;
   }
 
   handleMessageOpen() {
@@ -91,7 +86,7 @@ class CargoDetail extends React.Component {
 
 
   renderBtn() {
-    return <Button className="apply-for" onClick={this.handleApply}>订货</Button>;
+    return <Button className="apply-for" onClick={this.handleApply}>咨询订货</Button>;
   }
   render() {
     document.title = '货源详情';
@@ -100,7 +95,6 @@ class CargoDetail extends React.Component {
       bindVisible,
       submited,
       distance,
-      isRequesting,
     } = this.state;
     const { cargoInfo, projectInfo } = this.state;
     // const { projectInfo } = this.state;
@@ -178,12 +172,6 @@ class CargoDetail extends React.Component {
               bindVisible == true ? this.renderBindView() : null
             }
           </WingBlank>
-          <ActivityIndicator
-            toast
-            text="订货中..."
-            animating={isRequesting}
-          />
-
         </div>
         { submited === false ? this.renderBtn() : null }
       </div>
@@ -250,35 +238,6 @@ class CargoDetail extends React.Component {
       });
     }, (returnData) => {
       console.log(returnData);
-    });
-  }
-
-  handleOfferRequest() {
-    const uuid = localStorage.getItem('uuid');
-    if (uuid === undefined || this.state.isRequesting) {
-      return;
-    }
-    this.setState({
-      isRequesting: true,
-    });
-
-    const { cargoInfo } = this.state;
-
-    const data = {
-      cargoId: `${cargoInfo.cargoId}`,
-      type: 'CARGO_APPLY',
-    };
-    const serviceName = 'SERVICE_CARGO';
-
-    this.httpRequest(data, serviceName, (returnData) => {
-      Toast.success(returnData.msg);
-      this.handleOfferSucc();
-      this.context.router.push(`/my-cargo/${returnData.result}`);
-    }, (returnData) => {
-      Toast.fail(returnData.msg);
-      this.setState({
-        isRequesting: false,
-      });
     });
   }
 

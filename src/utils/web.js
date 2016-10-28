@@ -12,7 +12,7 @@ export function postRequest(data, serviceName, success, fail) {
   };
 
   return request.post(url.webapp)
-  .withCredentials()
+  .timeout(10000)
   .send(params)
   .then((res) => {
     const returnData = JSON.parse(res.text);

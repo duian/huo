@@ -8,6 +8,8 @@ import { postRequest } from '../../utils/web';
 import mapIcon from './map-icon.png';
 import request from 'superagent-bluebird-promise';
 import url from '../../utils/url';
+import BindView from './../Register/BindView';
+
 
 const columns = [
   { title: '标题', dataIndex: 'title', key: 'title' },
@@ -32,6 +34,8 @@ class CargoDetail extends React.Component {
       payInfo: {},
       distance: null,
       payBtnVisible: true,
+      bindVisible: false,
+      preparedData: false,
     };
 
     this.cloneChildren = this.cloneChildren.bind(this);
@@ -50,6 +54,12 @@ class CargoDetail extends React.Component {
     // 提交支付信息
     this.postPayInfo = this.postPayInfo.bind(this);
     this.httpRequest = postRequest.bind(this);
+
+    this.handleBindClose = this.handleBindClose.bind(this);
+    this.handleBindOpen = this.handleBindOpen(this);
+    this.renderBindView = this.renderBindView.bind(this);
+
+
   }
 
   cloneChildren() {
@@ -93,7 +103,7 @@ class CargoDetail extends React.Component {
   prepareData() {
     // const uuid = localStorage.getItem('uuid');
     const data = {
-      orderId: this.props.params.id.toString(),
+      orderId: `${this.props.params.id}`,
       type: 'ORDER_DETAIL',
     };
     const service = 'SERVICE_ORDER';
@@ -137,13 +147,47 @@ class CargoDetail extends React.Component {
         unloadAddressInfo: returnData.result.unloadAddressInfo,
       });
     }, (returnData) => {
-      console.log(returnData.msg);
+      console.log(returnData.errorCode);
+        if (returnData.errorCode == '4100' && !this.state.preparedData){
+          this.setState({
+            bindVisible: true,
+            preparedData: true,
+          });
+        }
     });
+  }
+
+  // 注册提示弹出层
+  handleBindOpen() {
+    this.setState({
+      bindVisible: true,
+    });
+  }
+
+  handleBindClose(){
+    this.setState({
+      bindVisible:false,
+    });
+  }
+
+  renderBindView(){
+    return(
+      <BindView
+        onSuccess = {this.handleBindClose}
+        onClose = {this.handleBindClose}
+      />
+    );
   }
 
   // 获取支付信息
   getPayInfo() {
-    // const uuid = localStorage.getItem('uuid');
+    const uuid = localStorage.getItem('uuid');
+
+    // 未绑定，弹出绑定页面
+    if (uuid === undefined || uuid === null) {
+      return this.setState({ bindVisible: true });
+    }
+
     const { id } = this.props.params;
     const data = {
       orderId: id,
@@ -161,7 +205,6 @@ class CargoDetail extends React.Component {
 
   // 取消支付
   cancelPay() {
-    // const { id } = this.props.params;
     const { orderNum } = this.state.cargoInfo;
     const data = {
       orderNum,
@@ -174,16 +217,15 @@ class CargoDetail extends React.Component {
    // 确认支付
   postPayInfo() {
     this.handleOfferClose();
-    const { id } = this.props.params;
-    sessionStorage.setItem('orderId',id)
     const {cargoInfo} = this.state;
     cargoInfo.statusStr = '运输中';
     this.setState({
       cargoInfo,
       payBtnVisible: false,
     });
-    this.context.router.push(`/my-cargo/${id}/pay-success/${this.state.payInfo.actualFee}`);
+    this.context.router.push('/person/upload');
     return;
+
     const { orderNum } = this.state.cargoInfo;
     const data = {
       orderNum,
@@ -237,8 +279,7 @@ class CargoDetail extends React.Component {
                 cargoInfo,
                 payBtnVisible: false,
               });
-              sessionStorage.setItem('orderId',id)
-              this.context.router.push(`/my-cargo/${this.props.params.id}/pay-success/${this.state.payInfo.actualFee}`);
+              this.context.router.push('/person/upload');
             }
           },
           cancel: (res)=>{
@@ -305,6 +346,7 @@ class CargoDetail extends React.Component {
       payInfo,
       distance,
       payBtnVisible,
+      bindVisible,
     } = this.state;
     let visible = false;
     if (parseInt(cargoInfo.status, 10) === 99 && payBtnVisible){
@@ -429,6 +471,7 @@ class CargoDetail extends React.Component {
             />
           </WingBlank>
         </div>
+        { bindVisible == true ? this.renderBindView() : null }
         { parseInt(cargoInfo.status, 10) > 99 ? this.renderAddress() : null}
         { visible ? this.renderBtn() : null}
         { parseInt(cargoInfo.status, 10) < 99 ? this.renderDesc() : null}

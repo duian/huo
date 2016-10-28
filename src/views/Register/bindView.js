@@ -21,7 +21,7 @@ class BindView extends React.Component {
     this.handleBindSucc = this.handleBindSucc.bind(this);
     this.httpRequest = postRequest.bind(this);
     this.handleBind = this.handleBind.bind(this);
-
+    
   }
   
   render(){

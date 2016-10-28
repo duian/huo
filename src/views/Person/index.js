@@ -35,9 +35,9 @@ class Person extends Component {
   modifyDriverInfo(e) {
     const { driverInfo } = this.state;
     if (driverInfo.driverStatus === 10) {
-      e.preventDefault();
+      // e.preventDefault();
       Toast.info('您已认证，不能编辑信息', 0.8);
-      return false;
+      // return false;
     }
     return true;
   }
@@ -45,9 +45,9 @@ class Person extends Component {
   modifyCertifyImg(e) {
     const { driverInfo } = this.state;
     if (driverInfo.certifyStatus === 10) {
-      e.preventDefault();
+      // e.preventDefault();
       Toast.info('车辆信息已认证，不能编辑信息', 0.8);
-      return false;
+      // return false;
     }
     return true;
   }

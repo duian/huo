@@ -19,6 +19,7 @@ class Img extends React.Component {
     this.openDrop = this.openDrop.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
+    this.uploadDriverCertiy = this.uploadDriverCertiy.bind(this);
   }
 
   openDrop() {
@@ -30,13 +31,47 @@ class Img extends React.Component {
   }
 
   handleUpload() {
-    const uuid = localStorage.getItem('uuid');
     const { files } = this.state;
     if (files[0] === undefined) {
       Toast.info('请选择证件照片');
       return;
     }
     this.setState({ animating: true });
+    console.log(files[0]);
+    const cavEle = document.createElement('canvas');
+    const canvas = cavEle.getContext('2d');
+    const img = new Image();
+    img.src = files[0].preview;
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (e)=>{
+      img.src = e.target.result;
+        // 等比缩放
+        cavEle.height = img.height/4;
+        cavEle.width = img.width/4;
+        canvas.drawImage(img,0,0,cavEle.width,cavEle.height);
+        const pressesImg = cavEle.toDataURL('image/jpeg',1);
+
+        const byteString = atob(pressesImg.split(',')[1]);
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+
+        const mimeString = pressesImg.split(',')[0].split(':')[1].split(';')[0];
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        const bb = new Blob([ab],{type:mimeString});
+        const file = new File([bb],'file.jpg',{type:'image/jpeg',lastModified:Date.now()});
+        console.log(file);
+        this.uploadDriverCertiy(file);
+    };
+    reader.onerror = ()=>{
+        this.setState({ animating: false });
+    };
+  }
+
+  uploadDriverCertiy(imageFile){
+    const uuid = localStorage.getItem('uuid');
     const data = {
       data: {
         type: 'IMG_UP',
@@ -48,18 +83,18 @@ class Img extends React.Component {
     };
     request.post(url.webapp)
     .withCredentials()
-    .field('file', files[0])
+    .field('file', imageFile)
     .field('json', JSON.stringify(data))
     .then(res => {
       const returnData = JSON.parse(res.text);
       if (returnData.success) {
-        // console.log(returnData.result);
         this.updateDriverCerityfy(returnData.result);
       } else {
         Toast.fail(returnData.msg);
       }
       this.setState({ animating: false });
     });
+
   }
 
   updateDriverCerityfy(imagePath) {

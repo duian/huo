@@ -27,13 +27,9 @@ function redirectToLogin(nextState, replace) {
 }
 
 function redirectToCargo(nextState, replace) {
-  // if (localStorage.getItem('uuid') !== null) {
-  //   replace('/cargo');
-  // } else {
-  //   if (nextState.location.search.indexOf('?from=') === -1) {
-  //     replace(`${nextState.location.pathname}?from=cargo`);
-  //   }
-  // }
+  if (localStorage.getItem('uuid') === null) {
+    replace('/cargo');
+  } 
 }
 
 class Routes extends React.Component {
@@ -50,13 +46,15 @@ class Routes extends React.Component {
       this.requestForOpenId(weChatCodeArr[1]);
     }
     // this.requestForOpenId('weChatCode-123455');
+
+    // <Route path="login" component={Login} onEnter={redirectToCargo}/>
+    // <Route path="register" component={Register} onEnter={redirectToCargo}/>
+
     return (
       <Router history={hashHistory}>
-        <Route path="login" component={Login} onEnter={redirectToCargo}/>
-        <Route path="register" component={Register} onEnter={redirectToCargo}/>
         <Route path="/" component={App}>
           <IndexRoute component={Cargo}/>
-          <Route path="person" component={Person} onEnter={redirectToLogin}>
+          <Route path="person" component={Person} onEnter={redirectToCargo}>
             <Route path="name" component={EditName}/>
             <Route path="car-number" component={EditNumber}/>
             <Route path="car-info" component={EditInfo}/>
@@ -67,9 +65,8 @@ class Routes extends React.Component {
           </Route>
           <Route path="cargo" component={Cargo}/>
           <Route path="cargo/:id" component={CargoDetail}/>
-          <Route path="my-cargo" component={MyCargo} onEnter={redirectToLogin}/>
-          <Route path="my-cargo/:id" component={MyCargoDetail} onEnter={redirectToLogin}>
-            <Route path="pay-success/:actualFee" component={OfferSuccess}/>
+          <Route path="my-cargo" component={MyCargo} onEnter={redirectToCargo}/>
+          <Route path="my-cargo/:id" component={MyCargoDetail}>
             <Route path="map" component={MyCargoMap}/>
           </Route>
         </Route>
@@ -86,6 +83,7 @@ class Routes extends React.Component {
     this.httpRequest(data, service, (returnData) => {
       localStorage.setItem('openId',returnData.result);
     }, (returnData) => {
+      
     });
  }
 

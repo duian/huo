@@ -78,8 +78,6 @@ class OfferSuccess extends React.Component {
       // 请求失败
       Toast.info(returnData.msg);
     });
-
-
   }
 
 }
