@@ -15,7 +15,7 @@ class BindView extends React.Component {
       countDown: 60,
     };
 
-    this.sendVerify = this.sendVerify.bind(this);
+    // this.sendVerify = this.sendVerify.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleBindCancel = this.handleBindCancel.bind(this);
     this.handleBindSucc = this.handleBindSucc.bind(this);
@@ -56,22 +56,6 @@ class BindView extends React.Component {
                   clear
                 >
                 </InputItem>
-                <InputItem
-                  {...getFieldProps('verify')}
-                  placeholder="请输入验证码"
-                  className="two"
-                  type="number"
-                  maxLength={6}
-                  labelNumber={2}
-                  extra = {<Button
-                    className="verify"
-                    inline
-                    disabled={verifyButtonState}
-                    onClick={this.sendVerify}
-                    >{verifyText}</Button>}
-                  clear
-                >  
-                </InputItem>
           </div>
           <div>
             <Button inline className="bindView cancel-btn" onClick={this.handleCancel}>取消</Button>
@@ -82,34 +66,6 @@ class BindView extends React.Component {
     );
   }
 
-  sendVerify() {
-
-    const mobile = this.props.form.getFieldProps('mobile').value;
-    if ( mobile === undefined){
-      Toast.info('请填写手机号码');
-      return;
-    }
-    this.setState({ verifyButtonState: true, countDown: 60 });
-    const text = setInterval(() => this.setState({ countDown: this.state.countDown - 1 }), 1000);
-    setTimeout(() => {
-       this.setState({ verifyButtonState: false, countDown: 60 });
-      clearInterval(text);
-    }, 60000);
-
-    const data = {
-      mobile ,
-      type: 'DRIVER_BINDING',
-    };
-    const service = 'SERVICE_IDENTIFY_CODE';
-    this.httpRequest(data, service, (returnData) => {
-      Toast.success(returnData.msg);
-    }, (returnData) => {
-      Toast.fail(returnData.msg);
-      this.setState({ verifyButtonState: false, countDown: 60 });
-      clearInterval(text);
-    });
-  }
-
   // 取消绑定
   handleCancel() {
     this.handleBindCancel();
@@ -118,17 +74,12 @@ class BindView extends React.Component {
   // 用户绑定
   handleBind() {
     const mobile = this.props.form.getFieldProps('mobile').value;
-    const code = this.props.form.getFieldProps('verify').value;
     const openId = localStorage.getItem('openId');
-    console.log(mobile);
     if (mobile === undefined || mobile == ''){
       Toast.info('请填写手机号码')
       return;
     }
-    if (code === undefined || mobile == ''){
-      Toast.info('请填写验证码');
-      return;
-    }
+
     if (openId == null){
       Toast.info('请在微信浏览器打开');
       return;
@@ -136,7 +87,6 @@ class BindView extends React.Component {
 
     const data = {
       mobile: `${mobile}`,
-      code:`${this.props.form.getFieldProps('verify').value}`,
       openId,
       type: 'DRIVER_BINDING',
     };

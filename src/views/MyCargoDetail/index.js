@@ -40,6 +40,7 @@ class CargoDetail extends React.Component {
 
     this.cloneChildren = this.cloneChildren.bind(this);
 
+    this.renderSyncNotice = this.renderSyncNotice.bind(this);
     this.handleOfferOpen = this.handleOfferOpen.bind(this);
     this.handleOfferClose = this.handleOfferClose.bind(this);
     this.cancelPay = this.cancelPay.bind(this);
@@ -58,7 +59,7 @@ class CargoDetail extends React.Component {
     this.handleBindClose = this.handleBindClose.bind(this);
     this.handleBindOpen = this.handleBindOpen(this);
     this.renderBindView = this.renderBindView.bind(this);
-
+    this.paySuccSyncNotify = this.paySuccSyncNotify.bind(this);
 
   }
 
@@ -140,11 +141,14 @@ class CargoDetail extends React.Component {
           this.setState({ distance });
         });
       });
+      // 订单支付通知收到后不显示支付按钮
+      const notifyNotice = returnData.result.notifyNotice == 1?false:true;
       this.setState({
         cargoInfo: returnData.result,
         projectInfo: returnData.result.projectInfo,
         loadAddressInfo: returnData.result.loadAddressInfo,
         unloadAddressInfo: returnData.result.unloadAddressInfo,
+        payBtnVisible:notifyNotice,
       });
     }, (returnData) => {
       console.log(returnData.errorCode);
@@ -214,17 +218,37 @@ class CargoDetail extends React.Component {
     this.httpRequest(data, service);
   }
 
+  paySuccSyncNotify(payMsg){
+    const data = {
+      orderId: `${this.props.params.id}`,
+      payMsg: payMsg ,
+      type: 'ORDER_PAY_SYNC_NOTIFY' ,
+    };
+    const service = 'SERVICE_PAY';
+    this.httpRequest(data, service,(returnData)=>{
+      // success
+      if(payMsg == "get_brand_wcpay_request：ok"){
+        this.setState({
+          payBtnVisible: false,
+        });
+      }
+    },(returnData)=>{
+      // fail -- 支付通知失败
+      
+    });
+  }
+
    // 确认支付
   postPayInfo() {
-    this.handleOfferClose();
-    const {cargoInfo} = this.state;
-    cargoInfo.statusStr = '运输中';
-    this.setState({
-      cargoInfo,
-      payBtnVisible: false,
-    });
-    this.context.router.push('/person/upload');
-    return;
+    // this.handleOfferClose();
+    // const {cargoInfo} = this.state;
+    // cargoInfo.statusStr = '运输中';
+    // this.setState({
+    //   cargoInfo,
+    //   payBtnVisible: false,
+    // });
+    // this.context.router.push('/person/upload');
+    // return;
 
     const { orderNum } = this.state.cargoInfo;
     const data = {
@@ -269,17 +293,13 @@ class CargoDetail extends React.Component {
           signType,
           paySign,
           success: (res) => {
-            WeixinJSBridge.log(res.err_msg);
-            if (!res.err_msg) {
+            this.paySuccSyncNotify(res.err_msg);
+            if (res.err_msg === "get_brand_wcpay_request：ok") {
               // 支付成功
               this.handleOfferClose();
-              const {cargoInfo} = this.state;
-              cargoInfo.statusStr = '运输中';
-              this.setState({
-                cargoInfo,
-                payBtnVisible: false,
-              });
               this.context.router.push('/person/upload');
+            }else {
+              // 支付失败或者取消支付
             }
           },
           cancel: (res)=>{
@@ -304,6 +324,12 @@ class CargoDetail extends React.Component {
 
   renderBtn() {
     return <Button className="apply-for" onClick={this.getPayInfo}>支付</Button>;
+  }
+  
+  renderSyncNotice(){
+    return(
+      <p className="mycargo-desc">处理中，系统正在确认交易</p>
+    );
   }
 
   renderAddress() {
@@ -472,9 +498,10 @@ class CargoDetail extends React.Component {
           </WingBlank>
         </div>
         { bindVisible == true ? this.renderBindView() : null }
-        { parseInt(cargoInfo.status, 10) > 99 ? this.renderAddress() : null}
-        { visible ? this.renderBtn() : null}
-        { parseInt(cargoInfo.status, 10) < 99 ? this.renderDesc() : null}
+        { parseInt(cargoInfo.status, 10) > 99 ? this.renderAddress() : null }
+        { visible ? this.renderBtn() : null }
+        { (parseInt(cargoInfo.status, 10) === 99 && !payBtnVisible) ? this.renderSyncNotice() : null }
+        { parseInt(cargoInfo.status, 10) < 99 ? this.renderDesc() : null }
         <ReactCSSTransitionGroup transitionName="pageSlider"
           transitionEnterTimeout={600} transitionLeaveTimeout={600}>
           {this.cloneChildren()}
